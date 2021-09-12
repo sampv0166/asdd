@@ -74,7 +74,7 @@ const OrdersScreen = ({ match, history }) => {
                     <th> User</th>
                     <th> Total Price</th>
                     <th> Date</th>
-                    <th> Status</th>;
+                    <th> Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -125,7 +125,7 @@ const OrdersScreen = ({ match, history }) => {
                         )}
 
                         {item.payment_status === 1 ? (
-                          <Badge variant="success">confirmed</Badge>
+                          <Badge variant="success">Ready for Shipment</Badge>
                         ) : (
                           ""
                         )}
@@ -210,16 +210,7 @@ const OrdersScreen = ({ match, history }) => {
                             </Dropdown.Toggle>
                           </div>
                           <Dropdown.Menu>
-                            <Dropdown.Item
-                              onClick={() => {
-                                let formdata = new FormData();
-                                formdata.set("order_id", item.id);
-                                formdata.set("status", 0);
-                                dispatch(updateOrderStatus(dispatch, formdata));
-                              }}
-                            >
-                              pending
-                            </Dropdown.Item>
+         
                             <Dropdown.Item
                               onClick={() => {
                                 let formdata = new FormData();
@@ -228,7 +219,7 @@ const OrdersScreen = ({ match, history }) => {
                                 dispatch(updateOrderStatus(dispatch, formdata));
                               }}
                             >
-                              confirmed
+                              Ready for Shipment
                             </Dropdown.Item>
 
                             <Dropdown.Item
@@ -252,7 +243,7 @@ const OrdersScreen = ({ match, history }) => {
                               delivered
                             </Dropdown.Item>
                             <div className="dropdown-divider"></div>
-                            <Dropdown.Item
+                            {/*<Dropdown.Item
                               onClick={() => {
                                 let formdata = new FormData();
                                 formdata.set("order_id", item.id);
@@ -262,7 +253,7 @@ const OrdersScreen = ({ match, history }) => {
                               className="text-danger"
                             >
                               cancel
-                            </Dropdown.Item>
+                            </Dropdown.Item>*/}
                           </Dropdown.Menu>
                         </Dropdown>
                       </td>

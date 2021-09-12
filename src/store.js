@@ -59,6 +59,10 @@ import {
   sliderDetailsReducer,
   sliderListReducer,
 } from "./reducers/sliderReducers";
+import {
+  settingsCreateReducer,
+  settingsListReducer,
+} from "./reducers/settingsReducer";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -112,6 +116,9 @@ const reducer = combineReducers({
   sliderDetails: sliderDetailsReducer,
   sliderCreate: sliderCreateReducer,
   sliderDelete: sliderDeleteReducer,
+
+  listSettings: settingsListReducer,
+  updateSettings: settingsCreateReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

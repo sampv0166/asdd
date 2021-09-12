@@ -41,8 +41,6 @@ export const searchProducts = (keyword) => async (dispatch) => {
 
     data2 = data.products;
 
-    console.log(data2);
-
     dispatch({
       type: SEARCHED_PRODUCT_SUCCESS,
       payload: data2,
@@ -60,6 +58,8 @@ export const searchProducts = (keyword) => async (dispatch) => {
 
 export const listProducts =
   (pageNumber, keyword, shopid) => async (dispatch) => {
+    console.log(keyword + 'keword');
+    console.log(shopid+ 'shopid');
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -94,8 +94,6 @@ export const listProducts =
         (keyword === "" || keyword === undefined || keyword === null) &&
         (shopid !== "" || shopid !== undefined || shopid !== null)
       ) {
-        console.log(shopid + "k");
-        console.log(keyword + "k");
         const data = await axios.get(
           `${BASE_URL}api/v2/admin/searchproductsbyshops?shop_id=${shopid}`,
           config

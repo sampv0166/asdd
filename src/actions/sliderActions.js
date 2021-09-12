@@ -44,8 +44,7 @@ export const getSlider =
 
       const data = resdata;
 
-      console.log(data);
-
+   
       dispatch({
         type: SLIDER_SUCCESS,
         payload: data,

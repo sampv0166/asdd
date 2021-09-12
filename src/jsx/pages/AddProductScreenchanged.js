@@ -528,7 +528,7 @@ const AddProductScreen = ({ history, match }) => {
   };
 
   useEffect(() => {
-    console.log(hasVariant);
+   
     if (category.length === 0) {
       dispatch(getCategory());
     }
@@ -623,7 +623,7 @@ const AddProductScreen = ({ history, match }) => {
     if (userinfo.user.typeofuser === "U") {
       dispatch(listShopDetails(user.user.shop_id));
     }
-    console.log(ProductVariationList);
+
   }, [dispatch, productId, ProductVariationList]);
 
   const addToVariationList = (formik) => {
@@ -1014,7 +1014,7 @@ const AddProductScreen = ({ history, match }) => {
                   )}
                 </Row>
 
-                {console.log(formik.values)}
+               
 
                 {renderPriceStock(formik)}
 

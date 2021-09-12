@@ -21,7 +21,7 @@ const OrderDetailsScreen = ({ match, history, setHasVariant }) => {
 
   useLayoutEffect(() => {
     dispatch(listOrderDetailsById(orderId));
-    console.log(ordersDetails);
+  
   }, [dispatch, orderId]);
 
   return (

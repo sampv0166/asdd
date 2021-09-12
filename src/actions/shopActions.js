@@ -44,7 +44,8 @@ export const listShops = (pageNumber, history, keyword) => async (dispatch) => {
       dispatch({ type: SHOP_REQUEST });
 
       const { data } = await axios.get(
-        `${BASE_URL}api/v2/admin/shop?page=${pageNumber}` , config
+        `${BASE_URL}api/v2/admin/shop?page=${pageNumber}`,
+        config
       );
 
       dispatch({
@@ -116,7 +117,7 @@ export const getAllShops = () => async (dispatch) => {
 
       //`${BASE_URL}api/v2/public/shop?page=${pageNumber}`
     );
-    console.log(data);
+
     dispatch({
       type: ALL_SHOP_SUCCESS,
       payload: data,
@@ -184,6 +185,9 @@ export const createShop = (dispatch, formdata) => async () => {
       formdata,
       config
     );
+
+    formdata.set("user_id", data.owner ? data.owner.id : "");
+    dispatch(createPermission(dispatch, formdata));
 
     dispatch({
       type: SHOP_CREATE_SUCCESS,

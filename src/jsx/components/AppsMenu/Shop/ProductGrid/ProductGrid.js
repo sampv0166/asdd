@@ -28,6 +28,7 @@ import Message from "../../../Message";
 import { Formik } from "formik";
 import { set } from "date-fns";
 import { getAllShops } from "../../../../../actions/shopActions";
+import SelectInput from "@material-ui/core/Select/SelectInput";
 
 const ProductGrid = ({ match, history }) => {
   const [keyword, setKeyword] = useState("");
@@ -59,7 +60,7 @@ const ProductGrid = ({ match, history }) => {
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const [shopss, setShopss] = useState([{ key: "", value: "" }]);
 
-  let shopid;
+  let shopid = 0;
 
   const populateShops = () => {
     if (user.user.typeofuser === "A" || user.user.typeofuser === "U") {
@@ -81,7 +82,7 @@ const ProductGrid = ({ match, history }) => {
         objects[x] = { key: shops[x].shop_name_en, value: shops[x].id };
       }
 
-      objects.unshift({ key: "Choose A Shop", value: "" });
+      objects.unshift({ key: "Sort By Shop", value: "" });
       setShopss(objects);
       return objects;
     }
@@ -90,13 +91,13 @@ const ProductGrid = ({ match, history }) => {
   const paginationClicked = async (e, number) => {
     e.preventDefault();
     pageNumber = number;
-    dispatch(listProducts(pageNumber, inputValue, selectedvalue));
+    dispatch(listProducts(pageNumber, inputValue, selectref.current.value ));
     history.push(`/ecom-product-grid/page/${number}`);
   };
 
   const debouncedSave = useCallback(
     debounce(
-      (newValue) => dispatch(listProducts(1, newValue, selectedvalue)),
+      (newValue) => dispatch(listProducts(1, newValue, selectref.current.value )),
       1000
     ),
     [dispatch]
@@ -109,10 +110,10 @@ const ProductGrid = ({ match, history }) => {
 
   useEffect(() => {
     populateShops();
-  }, [dispatch, pageNumber, products]);
+  }, [dispatch, pageNumber, products, shops]);
 
   useLayoutEffect(() => {
-    dispatch(listProducts(pageNumber, inputValue, selectedvalue));
+    dispatch(listProducts(pageNumber, inputValue, ''));
     dispatch(listProductDetails(0));
     dispatch(getAllShops());
     populateShops();
@@ -149,66 +150,72 @@ const ProductGrid = ({ match, history }) => {
         <Message variant="danger">{error || errorProductLoading}</Message>
       ) : (
         <Fragment>
-          <div className="d-flex justify-content-between my-4">
-            <div className="d-flex w-50">
-              <input
-                className="form-control shadow-none rounded mx-2"
-                placeholder="Search Products"
-                onChange={(input) => {
-                  setInputValue(input.target.value);
-                  //updateValue(input.target.value)
-                  console.log(selectedvalue);
-                }}
-                value={inputValue}
-                autoFocus
-              />
-              <div
-                className="d-flex my-3 justify-content-end"
-                style={{ fontSize: "1.5rem", cursor: "pointer" }}
-                onClick={() => {
-                  dispatch(listProducts(1, inputValue, selectedvalue));
-                }}
-              >
-                <i
-                  class="bx bx-search-alt-2"
-                  style={{
-                    fontSize: "2rem",
-                    position: "absolute",
-                    marginRight: "15px",
-                  }}
-                ></i>
-              </div>
-            </div>
-
-            {user.user.typeofuser === "S" ? (
-              <div>
-                <div className>
-                  <select
-                    name="shop_id"
-                    className={`form-select form-control`}
-                    onChange={(e) => {
-                      shopid = e.target.value;
-                      setSelectedValue(e.target.value);
-                      dispatch(listProducts(1, inputValue, e.target.value));
+          <div className="justify-content-between my-4">
+            <div className="row">
+              <div className="col-md-5">
+                <div className="d-flex">
+                  <input
+                    className="form-control shadow-none rounded mx-2"
+                    placeholder="Search Products"
+                    onChange={(input) => {
+                      setInputValue(input.target.value);
+                      updateValue(input.target.value);
                     }}
-                    ref={selectref}
-                    value={selectedvalue}
+                    value={inputValue}
+                    autoFocus
+                  />
+                  {/*<div
+                    className="input-group-append rounded"
+                    style={{ fontSize: "1rem", cursor: "pointer" }}
+                    onClick={() => {
+               
+                      dispatch(listProducts(1, inputValue, selectedvalue));
+                    }}
                   >
-                    {shopss.map((option) => {
-                      return (
-                        <option key={option.value} value={option.value}>
-                          {option.key}
-                        </option>
-                      );
-                    })}
-                  </select>
+                    <span class="input-group-text rounded">
+                      <i
+                        class="bx bx-search-alt-2 mx-1"
+                        style={{
+                          fontSize: "1.5rem",
+                          marginRight: "15px",
+                        }}
+                      ></i>
+                    </span>
+                  </div>
+                      */}
                 </div>
               </div>
-            ) : (
-              ""
-            )}
 
-            {/*<div className="form-check form-switch">
+              {user.user.typeofuser === "S" ? (
+                <div className="col-md-5">
+                  <div className="mx-2">
+                    <select
+                      name="shop_id"
+                      className={`form-select form-control`}
+                      onChange={(e) => {
+                        shopid = e.target.value;
+                        setSelectedValue(e.target.value);
+                        shopid = e.target.value;
+                        dispatch(listProducts(1, inputValue, e.target.value));
+                      }}
+                      ref={selectref}
+                      value={selectedvalue}
+                    >
+                      {shopss.map((option) => {
+                        return (
+                          <option key={option.value} value={option.value}>
+                            {option.key}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+
+              {/*<div className="form-check form-switch">
               <input
                 className="form-check-input"
                 type="checkbox"
@@ -250,16 +257,19 @@ const ProductGrid = ({ match, history }) => {
               <label className="form-check-label">ACTIVE</label>
               </div>*/}
 
-            <div>
-              <button
-                className="btn  btn-secondary"
-                onClick={() => {
-                  history.push("/ecom/addnewproduct");
-                  dispatch(listProductDetails(0));
-                }}
-              >
-                Add New Product
-              </button>
+              <div className="col-md-2">
+                <div className="d-flex my-1 justify-content-end">
+                  <button
+                    className="btn  btn-secondary"
+                    onClick={() => {
+                      history.push("/ecom/addnewproduct");
+                      dispatch(listProductDetails(0));
+                    }}
+                  >
+                    Add New Product
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 

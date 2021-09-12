@@ -60,7 +60,7 @@ export const listOrderDetailsById = (id) => async (dispatch) => {
       config
     );
 
-    console.log(data)
+
 
     dispatch({
       type: ORDER_DETAILS_LIST_SUCCESS,

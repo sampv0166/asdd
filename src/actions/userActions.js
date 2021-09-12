@@ -258,7 +258,7 @@ export const createUser = (dispatch, formdata, values, userId) => async () => {
       if (pair[0] === 'add_permission[]') {
         submit = true;
       }
-      console.log(pair[0] + ', ' + pair[1]);
+     
     }
 
     if (submit) {

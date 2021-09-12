@@ -1,9 +1,9 @@
-import { useLayoutEffect } from 'preact/hooks';
-import React, { useEffect } from 'react';
-import { Carousel } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { getSlider } from '../../actions/sliderActions';
+import { useLayoutEffect } from "preact/hooks";
+import React, { useEffect } from "react";
+import { Carousel } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { getSlider } from "../../actions/sliderActions";
 
 const Sliders = () => {
   const sliderList = useSelector((state) => state.sliderList);
@@ -13,7 +13,6 @@ const Sliders = () => {
 
   useLayoutEffect(() => {
     dispatch(getSlider());
-    console.log(sliders);
   }, [dispatch]);
 
   return (

@@ -26,7 +26,7 @@ const StepTwo = ({formik}) => {
       formikFileArray.push(file);
     });
 
-    console.log(formikFileArray);
+    
 
     formik.setFieldValue("images", formikFileArray);
   };
@@ -80,15 +80,15 @@ const StepTwo = ({formik}) => {
     e.preventDefault();
 
     source = source.filter((fileName) => fileName !== fileToRemove);
-    console.log(source);
+   
     formikFileArray.filter((fileName) => fileName !== fileToRemove);
 
     setSelectedFiles(source);
     const files = Array.from(formikFileArray).filter((file, i) => index !== i);
     formik.setFieldValue("images", files);
-    console.log(files);
+   
     setFormikFileArray(files);
-    //console.log(fileimages);
+  
   };
 
   return (
@@ -160,7 +160,7 @@ const StepTwo = ({formik}) => {
                 formik.setFieldValue("hasoffer", d);
             }}  
             />
-            {console.log(formik.values)}
+           
             <label class="form-check-label" for="flexSwitchCheckDefault">
               Has Offer
             </label>

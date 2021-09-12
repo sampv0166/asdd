@@ -433,7 +433,7 @@ const AddProductScreen = ({ history, match }) => {
   };
 
   useEffect(() => {
-    console.log(hasVariant);
+   
     if (category.length === 0) {
       dispatch(getCategory());
     }
@@ -522,11 +522,8 @@ const AddProductScreen = ({ history, match }) => {
   }, [dispatch, productId, product]);
 
   useLayoutEffect(() => {
-    const user = JSON.parse(localStorage.getItem("userInfo"));
 
-    if (!user.user.permissions.includes("product.add")) {
-      history.push("/error");
-    }
+    checkPermission(history, "product.add");
 
     if (productId) {
       dispatch(listProductDetails(productId));

@@ -50,7 +50,6 @@ export const getCoupons =
 
       const data = resdata;
 
-      console.log(data);
 
       dispatch({
         type: COUPONS_SUCCESS,

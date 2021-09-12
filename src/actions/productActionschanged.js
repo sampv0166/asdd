@@ -41,8 +41,7 @@ export const searchProducts = (keyword) => async (dispatch) => {
 
     data2 = data.products;
 
-    console.log(data2);
-
+   
     dispatch({
       type: SEARCHED_PRODUCT_SUCCESS,
       payload: data2,

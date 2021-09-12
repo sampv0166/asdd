@@ -98,7 +98,7 @@ const AddNewUserScreen = ({ match, history }) => {
 
   useEffect(() => {
     if (userId && user) {
-      setUserImage(user.photo);
+      setUserImage(user.photolink);
       if (user.permissions && user.permissions.includes("product.add")) {
         setProdadd({ checked: true });
       } else {
@@ -552,18 +552,20 @@ const AddNewUserScreen = ({ match, history }) => {
                         )}
                       </div>
                     </div>
+                    <div className="d-flex justify-content-end">
+                      <button
+                        className="btn btn-success mt-3 my-2 px-5"
+                        type="submit"
+                      >
+                        Save
+                      </button>
+                    </div>
                   </div>
-
-                  <button
-                    className="btn btn-success mt-3 my-2 px-5"
-                    type="submit"
-                  >
-                    Save
-                  </button>
                 </div>
-                {user.typeofuser !== "A" ? (
-                  <Row>
-                    <Col className="col-md-6 my-4">
+
+                {userInfo.user.typeofuser !== "U" ? (
+                  <Row className = 'container-fluid'>
+                    <Col className="col-md-3 my-4">
                       Product Permissions
                       <div className="form-check form-switch my-2">
                         <input
@@ -613,7 +615,7 @@ const AddNewUserScreen = ({ match, history }) => {
                       </div>
                     </Col>
 
-                    <Col className="col-md-6 my-4">
+                    <Col className="col-md-3 my-4">
                       Shop Permissions
                       <div className="form-check form-switch my-2">
                         <input
@@ -663,7 +665,7 @@ const AddNewUserScreen = ({ match, history }) => {
                       </div>
                     </Col>
 
-                    <Col className="col-md-6 my-4">
+                    <Col className="col-md-3 my-4">
                       Category Permissions
                       <div className="form-check form-switch my-2">
                         <input
@@ -715,7 +717,7 @@ const AddNewUserScreen = ({ match, history }) => {
                       </div>
                     </Col>
 
-                    <Col className="col-md-6 my-4">
+                    <Col className="col-md-3 my-4">
                       Variation Permissions
                       <div className="form-check form-switch my-2">
                         <input
@@ -767,7 +769,7 @@ const AddNewUserScreen = ({ match, history }) => {
                       </div>
                     </Col>
 
-                    <Col className="col-md-6 my-4">
+                    <Col className="col-md-3 my-4">
                       Orders Permissions
                       <div className="form-check form-switch my-2">
                         <input
@@ -819,7 +821,7 @@ const AddNewUserScreen = ({ match, history }) => {
                       </div>
                     </Col>
 
-                    <Col className="col-md-6 my-4">
+                    <Col className="col-md-4 my-4">
                       Users Permissions
                       <div className="form-check form-switch my-2">
                         <input
@@ -871,7 +873,7 @@ const AddNewUserScreen = ({ match, history }) => {
                       </div>
                     </Col>
 
-                    <Col className="col-md-6 my-4">
+                    <Col className="col-md-3 my-4">
                       Coupon Permissions
                       <div className="form-check form-switch my-2">
                         <input
