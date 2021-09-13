@@ -97,12 +97,6 @@ const AddNewCouponscreen = ({ history, match }) => {
     code: Yup.string()
       .min(1, "Name must be atleast one character")
       .required("Required"),
-    description_en: Yup.string()
-      .min(1, "Name must be atleast one character")
-      .required("Required"),
-    description_ar: Yup.string()
-      .min(1, "Name must be atleast one character")
-      .required("Required"),
     value: Yup.number().required("required"),
   });
 
@@ -177,14 +171,17 @@ const AddNewCouponscreen = ({ history, match }) => {
                   <TextField label="Code" name="code" type="text" />
                 </div>
                 <div className="col-6">
+                  <TextField label="Value" name="value" type="number" />
+                </div>
+                {/*<div className="col-6">
                   <TextField
                     label="Descritpion English"
                     name="description_en"
                     type="text"
                   />
-                </div>
+          </div>*/}
               </div>
-              <div className="row g-3">
+              {/*<div className="row g-3">
                 <div className="col-6">
                   <TextField
                     label="Descritpion Arabic"
@@ -192,10 +189,7 @@ const AddNewCouponscreen = ({ history, match }) => {
                     type="text"
                   />
                 </div>
-                <div className="col-6">
-                  <TextField label="Value" name="value" type="number" />
-                </div>
-              </div>
+        </div>*/}
               <div className="col-6">
                 <div class="form-check form-switch my-3">
                   <input
@@ -233,6 +227,10 @@ const AddNewCouponscreen = ({ history, match }) => {
                 <div className="col-4 my-4">
                   <TextField label="Expiry date" name="expiry" type="text" />
                 </div>
+
+                
+
+
                 {user.user.typeofuser === "S" ? (
                   <div className="col-5 my-4">
                     <div>

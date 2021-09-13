@@ -19,8 +19,8 @@ const VariationTable = ({
   setVarId,
   history,
 }) => {
-  const TableHead = ["ID", "PRICE", "SIZE", "COLOR", " "];
 
+  const TableHead = ["ID", "PRICE", "SIZE", "COLOR", " "];
   let altimage;
 
   const dispatch = useDispatch();
@@ -32,13 +32,12 @@ const VariationTable = ({
       return;
     }
 
+
     if (productId) {
       if (window.confirm("Are you sure")) {
         let arr;
-
         arr = ProductVariationList.filter((item, index) => index !== i);
         setProductVariationList(arr);
-
         dispatch(deleteVariation(id));
       }
     } else {
@@ -46,6 +45,7 @@ const VariationTable = ({
       arr = ProductVariationList.filter((item, index) => index !== i);
       setProductVariationList(arr);
     }
+    
   };
 
   const renderVariationImages = (image) => {

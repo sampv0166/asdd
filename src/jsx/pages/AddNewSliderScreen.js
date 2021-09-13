@@ -174,32 +174,23 @@ const AddNewSliderScreen = ({ match, history }) => {
                 return;
               }
             }*/
-
             let formdata = new FormData();
-
             if (id !== 0) {
               formdata.append("id", id);
             }
-
-            //
-
             formdata.append("location", values.location);
             formdata.append("aspectratio", values.aspectratio);
-
             if (typeof values.image === "string") {
               formdata.delete("file");
             } else {
               formdata.append("file", values.image);
             }
-
             if (selectedProductOption !== null) {
               formdata.append("pid", Number(values.product_id));
             }
-
             if (selectedOption !== null) {
               formdata.append("shop_id", Number(values.shop_id));
             }
-
             handleSubmit(formdata);
           }}
         >
@@ -377,6 +368,7 @@ const AddNewSliderScreen = ({ match, history }) => {
                   backdrop="static"
                 >
                   <Modal.Header closeButton></Modal.Header>
+
                   <Modal.Body>
                     <div>
                       <Card

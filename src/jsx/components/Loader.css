@@ -27,19 +27,19 @@ body {
 }
 
 .load :first-child {
-  background: #19a68c;
+  background: #5e116d;
   animation-delay: -1.5s;
 }
 .load :nth-child(2) {
-  background: #f63d3a;
+  background: #9c17a8;
   animation-delay: -1s;
 }
 .load :nth-child(3) {
-  background: #fda543;
+  background: #dc73e6;
   animation-delay: -0.5s;
 }
 .load :last-child {
-  background: #193b48;
+  background: #dfabe9;
 }
 
 @keyframes spin {

@@ -64,6 +64,7 @@ const Settings = ({ history }) => {
                         label="KSA DELIVERY CHARGE"
                         name="ksa_delivery"
                         type="number"
+                        min="0"
                       />
                     </div>
                     <div className="col-md-4">
@@ -71,6 +72,7 @@ const Settings = ({ history }) => {
                         label="OMAN DELIVERY CHARGE"
                         name="oman_delivery"
                         type="number"
+                        min="0"
                       />
                     </div>
                   </div>
