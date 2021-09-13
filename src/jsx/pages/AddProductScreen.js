@@ -433,7 +433,6 @@ const AddProductScreen = ({ history, match }) => {
   };
 
   useEffect(() => {
-   
     if (category.length === 0) {
       dispatch(getCategory());
     }
@@ -522,7 +521,6 @@ const AddProductScreen = ({ history, match }) => {
   }, [dispatch, productId, product]);
 
   useLayoutEffect(() => {
-
     checkPermission(history, "product.add");
 
     if (productId) {

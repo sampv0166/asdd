@@ -58,8 +58,7 @@ export const searchProducts = (keyword) => async (dispatch) => {
 
 export const listProducts =
   (pageNumber, keyword, shopid) => async (dispatch) => {
-    console.log(keyword + 'keword');
-    console.log(shopid+ 'shopid');
+
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));

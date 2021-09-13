@@ -236,7 +236,7 @@ const SideBar = () => {
                 path.slice(1).includes("sliders") ? "mm-active" : ""
               }`}
             >
-              <Link className="ai-icon" aria-expanded="false">
+              <Link to={`/sliders/1`} className="ai-icon" aria-expanded="false">
                 <i class="bx bx-carousel"></i>
                 <span className="nav-text">Sliders</span>
               </Link>
@@ -260,8 +260,8 @@ const SideBar = () => {
               }`}
             >
               <Link className="ai-icon" to={"/settings"} aria-expanded="false">
-                <i class="bx bx-cog"></i>
-                <span className="nav-text">Settings</span>
+                <i class="bx bxs-truck"></i>
+                <span className="nav-text">Delivery Charges</span>
               </Link>
             </li>
           ) : (

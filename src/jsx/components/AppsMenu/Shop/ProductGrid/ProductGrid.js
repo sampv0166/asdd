@@ -91,13 +91,14 @@ const ProductGrid = ({ match, history }) => {
   const paginationClicked = async (e, number) => {
     e.preventDefault();
     pageNumber = number;
-    dispatch(listProducts(pageNumber, inputValue, selectref.current.value ));
+    dispatch(listProducts(pageNumber, inputValue, selectref.current.value));
     history.push(`/ecom-product-grid/page/${number}`);
   };
 
   const debouncedSave = useCallback(
     debounce(
-      (newValue) => dispatch(listProducts(1, newValue, selectref.current.value )),
+      (newValue) =>
+        dispatch(listProducts(1, newValue, selectref.current.value)),
       1000
     ),
     [dispatch]
@@ -113,7 +114,7 @@ const ProductGrid = ({ match, history }) => {
   }, [dispatch, pageNumber, products, shops]);
 
   useLayoutEffect(() => {
-    dispatch(listProducts(pageNumber, inputValue, ''));
+    dispatch(listProducts(pageNumber, inputValue, ""));
     dispatch(listProductDetails(0));
     dispatch(getAllShops());
     populateShops();
@@ -274,16 +275,25 @@ const ProductGrid = ({ match, history }) => {
           </div>
 
           <div className="row">
-            {products &&
+            {console.log(products.length)}
+            {products.length > 0 ? (
+              products &&
               products.map((product) => (
                 <Products
                   key={product.key}
                   product={product}
                   history={history}
                 />
-              ))}
+              ))
+            ) : (
+              <h3 className="my-3 mx-4">No Products</h3>
+            )}
           </div>
-          <Nav>{pag("", true, "danger", true, false)}</Nav>
+          {products.length !== 0 ? (
+            <Nav>{pag("", true, "danger", true, false)}</Nav>
+          ) : (
+            ""
+          )}
         </Fragment>
       )}
     </>

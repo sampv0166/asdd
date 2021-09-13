@@ -21,7 +21,6 @@ const OrderDetailsScreen = ({ match, history, setHasVariant }) => {
 
   useLayoutEffect(() => {
     dispatch(listOrderDetailsById(orderId));
-  
   }, [dispatch, orderId]);
 
   return (
@@ -104,52 +103,26 @@ const OrderDetailsScreen = ({ match, history, setHasVariant }) => {
                         <ListGroup variant="flush">
                           {ordersDetails.products &&
                             ordersDetails.products.map((item, index) => (
-                              <Link
-                                to={`/ecom/product-edit/${
-                                  item.product_info && item.product_info.id
-                                }`}
-                              >
-                                <ListGroup.Item
-                                  key={index}
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => {
-                                    if (
-                                      item.product_info &&
-                                      item.product_info.variations.length ===
-                                        1 &&
-                                      item.product_info &&
-                                      item.product_info.variations[0]
-                                        .color_name === null &&
-                                      item.product_info &&
-                                      item.product_info.variations[0]
-                                        .size_value === null
-                                    ) {
-                                      setHasVariant({ checked: false });
-                                    } else {
-                                      setHasVariant({ checked: true });
-                                    }
-                                  }}
-                                >
-                                  <Row>
-                                    <Col md={1}>
-                                      <Image
-                                        src={
-                                          item.product_info &&
-                                          item.product_info.coverimage
-                                        }
-                                        alt={''}
-                                        fluid
-                                        rounded
-                                      />
-                                    </Col>
-                                    <Col>{item.name_en}</Col>
-                                    <Col md={4}>
-                                      {item.quantity} x ${item.product_price} =
-                                      ${item.quantity * item.product_price}
-                                    </Col>
-                                  </Row>
-                                </ListGroup.Item>
-                              </Link>
+                              <ListGroup.Item key={index}>
+                                <Row>
+                                  <Col md={1}>
+                                    <Image
+                                      src={
+                                        item.product_info &&
+                                        item.product_info.coverimage
+                                      }
+                                      alt={""}
+                                      fluid
+                                      rounded
+                                    />
+                                  </Col>
+                                  <Col>{item.name_en}</Col>
+                                  <Col md={4}>
+                                    {item.quantity} x ${item.product_price} = $
+                                    {item.quantity * item.product_price}
+                                  </Col>
+                                </Row>
+                              </ListGroup.Item>
                             ))}
                         </ListGroup>
                       </ListGroup.Item>

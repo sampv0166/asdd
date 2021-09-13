@@ -237,7 +237,7 @@ const AddNewCategoryScreen = ({ match, history }) => {
                     ""
                   )}
 
-                  <button className="btn btn-success mt-3 my-2" type="submit">
+                  <button className="btn btn-secondary mt-3 my-2" type="submit">
                     Save
                   </button>
                 </Form>

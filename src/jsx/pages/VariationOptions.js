@@ -35,6 +35,7 @@ const VariationOptions = ({
 
   const [formikFileArray, setFormikFileArray] = useState([]);
   const [deleteimageurl, setDeletedimageurl] = useState([]);
+  const [blobImages, setBlobImages] = useState([]);
 
   const productDetails = useSelector((state) => state.productDetails);
   const {
@@ -76,6 +77,7 @@ const VariationOptions = ({
         );
 
         setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+        setBlobImages((prevImages) => prevImages.concat(filesArray));
 
         Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
       }
@@ -154,7 +156,7 @@ const VariationOptions = ({
       result = result.replace("://www.", "");
       result = result.replace("https://", "");
       deleteimageurl.push(result);
- 
+
       //dispatch(deleteVariationImage(result, varId, productId));
     }
 
@@ -162,11 +164,11 @@ const VariationOptions = ({
     const files = Array.from(formikFileArray).filter((file, i) => index !== i);
     formik.setFieldValue("images", files);
     setFormikFileArray(files);
-
   };
 
-   const addToVariationList = (formik) => {
-    formik.setFieldValue("blobImage", selectedFiles);
+  const addToVariationList = (formik) => {
+    formik.setFieldValue("blobImage", blobImages);
+
     setProductVariationList((prev) => [...prev, formik.values]);
     formik.setFieldValue("price", "");
     formik.setFieldValue("offerprice", "");
@@ -201,7 +203,6 @@ const VariationOptions = ({
         formdata.append("product_id", productId);
 
         if (varId) {
-       
           for (var i = 0; i < formikFileArray.length; i++) {
             if (typeof formikFileArray[i] === "string") {
             } else {
@@ -241,7 +242,6 @@ const VariationOptions = ({
           );
           setDeletedimageurl([]);
           dispatch(listProductDetails(productId));
-
           setProductVariationList(product[0].variations);
         } else {
           dispatch(createSingleVariation(dispatch, formdata, productId));
@@ -295,6 +295,7 @@ const VariationOptions = ({
             color_value: productVariations.color_value || "",
             hasoffer: productVariations.hasoffer || "",
             size_value: productVariations.size_value || "",
+            blobImage: [],
           }}
           onSubmit={(values, { resetForm }) => {}}
         >
@@ -356,7 +357,10 @@ const VariationOptions = ({
                               : (d = true);
                             sethasOffer({ checked: d });
                             formik.setFieldValue("hasoffer", d);
-                            formik.setFieldValue("offerprice", formik.values.price);
+                            formik.setFieldValue(
+                              "offerprice",
+                              formik.values.price
+                            );
                           }}
                         />
 

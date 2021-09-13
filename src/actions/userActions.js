@@ -258,9 +258,9 @@ export const createUser = (dispatch, formdata, values, userId) => async () => {
       if (pair[0] === 'add_permission[]') {
         submit = true;
       }
-     
     }
 
+    
     if (submit) {
       if (userId) {
         dispatch(updatePermission(dispatch, formdata));

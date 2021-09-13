@@ -24,8 +24,6 @@ export const getSettings = (formdata) => async (dispatch) => {
       config
     );
 
-    console.log(data);
-
     dispatch({
       type: SETTINGS_SUCCESS,
       payload: data,

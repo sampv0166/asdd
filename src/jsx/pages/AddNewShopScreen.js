@@ -108,7 +108,6 @@ const AddNewShopScreen = ({ match, history }) => {
 
   useLayoutEffect(() => {
     dispatch(listShopDetails(shopId));
-   
   }, [dispatch, shopId]);
 
   const validate = Yup.object({
@@ -119,7 +118,10 @@ const AddNewShopScreen = ({ match, history }) => {
     password: Yup.string().required("Required"),
     shop_trn: Yup.string(),
     shop_mob: Yup.string(),
-    shop_website: Yup.string(),
+    shop_website: Yup.string().matches(
+      /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+      "Enter correct url!"
+    ),
     bannerimage:
       Yup.mixed().required("required") || Yup.string().required("required"),
   });
@@ -502,6 +504,7 @@ const AddNewShopScreen = ({ match, history }) => {
                           label="Shop Mob"
                           name="shop_mob"
                           type="text"
+                          value = '+971'
                         />
                       </div>
                     </div>
@@ -925,7 +928,7 @@ const AddNewShopScreen = ({ match, history }) => {
 
                       <Col>
                         <button
-                          className="btn btn-success mt-3 w-100"
+                          className="btn btn-secondary mt-3 w-100"
                           type="submit"
                         >
                           Save
@@ -936,7 +939,7 @@ const AddNewShopScreen = ({ match, history }) => {
                     <Col>
                       <div className="d-flex justify-content-end">
                         <button
-                          className="btn btn-success mt-3 w-25"
+                          className="btn btn-secondary mt-3 w-25"
                           type="submit"
                         >
                           Save

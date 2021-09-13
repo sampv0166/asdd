@@ -2576,9 +2576,11 @@ pre code {
   text-shadow: 0 0 0 #495057;
 }
 .form-control:focus {
+
   color: #495057;
   background-color: #fff;
-  border-color: #adeb77;
+  border-color: #a257ac;
+  
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(108, 197, 29, 0.25);
 }
@@ -35607,9 +35609,10 @@ svg text {
 .form-control {
   border-radius: 0;
   background: #fff;
-  border: 1px solid #f0f1f5;
+  border: 1px solid rgba(174, 121, 179, 0.39);
   color: #6e6e6e;
   height: 56px;
+  box-shadow: 50px;
 }
 @media only screen and (max-width: 1199px) {
   .form-control {
@@ -35815,7 +35818,7 @@ input[type="checkbox"]:checked:after {
   font-size: 12px;
   text-align: center;
   border-radius: 3px;
-  background: #6cc51d;
+  background: var(--kprimary);
 }
 
 .form-check-label {

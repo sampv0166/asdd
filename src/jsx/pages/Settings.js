@@ -75,7 +75,10 @@ const Settings = ({ history }) => {
                     </div>
                   </div>
                   <div className="d-flex justify-content-end">
-                    <button className="btn btn-success my-5 w-25" type="submit">
+                    <button
+                      className="btn btn-secondary my-5 w-25"
+                      type="submit"
+                    >
                       Save
                     </button>
                   </div>

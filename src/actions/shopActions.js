@@ -186,8 +186,21 @@ export const createShop = (dispatch, formdata) => async () => {
       config
     );
 
-    formdata.set("user_id", data.owner ? data.owner.id : "");
-    dispatch(createPermission(dispatch, formdata));
+    let submit = true;
+
+    for (var pair of formdata.entries()) {
+      if (pair[0] === "id") {
+        submit = false;
+        break;
+      } else {
+        submit = true;
+      }
+    }
+
+    if (submit && data.owner) {
+      formdata.set("user_id", data.owner.id);
+      dispatch(createPermission(dispatch, formdata));
+    }
 
     dispatch({
       type: SHOP_CREATE_SUCCESS,

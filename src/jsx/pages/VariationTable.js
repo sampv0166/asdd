@@ -18,6 +18,7 @@ const VariationTable = ({
   varId,
   setVarId,
   history,
+  blobImages,
 }) => {
   const TableHead = ["ID", "PRICE", "SIZE", "COLOR", " "];
 
@@ -82,106 +83,118 @@ const VariationTable = ({
         <Message>{errorproductDetails}</Message>
       ) : (
         <div>
-       
-            <Col lg={12}>
-              <div className="col-12 my-1 w-100">
-                <Table
-                  responsive
-                  hover
-                  className="header-border verticle-middle"
-                >
-                  <thead>
-                    <tr>
-                      <th scope="col">ID</th>
-                      {productId ? <th scope="col">IMAGES</th> : ""}
+          {console.log(blobImages)}
+          <Col lg={12}>
+            <div className="col-12 my-1 w-100">
+              <Table responsive hover className="header-border verticle-middle">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    {productId ? (
+                      <th scope="col">IMAGES</th>
+                    ) : (
+                      <th scope="col">IMAGES</th>
+                    )}
 
-                      <th scope="col">PRICE</th>
-                      {!hasSize.checked ? "" : <th scope="col">SIZE</th>}
-                      {!hasColor.checked ? "" : <th scope="col">COLOR</th>}
-                      <th scope="col" className="d-flex justify-content-center">
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {ProductVariationList.length > 0
-                      ? ProductVariationList.map((item, index) => (
-                          <tr key={index}>
-                            <td>{index}</td>
+                    <th scope="col">PRICE</th>
+                    {!hasSize.checked ? "" : <th scope="col">SIZE</th>}
+                    {!hasColor.checked ? "" : <th scope="col">COLOR</th>}
+                    <th scope="col" className="d-flex justify-content-center">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ProductVariationList.length > 0
+                    ? ProductVariationList.map((item, index) => (
+                        <tr key={index}>
+                          <td>{index}</td>
 
-                            {productId ? (
-                              <td>
-                                {item.images.map((image) => {
-                                  if (
-                                    image ===
-                                    "https://khaymatapi.mvp-apps.ae/storage/"
-                                  ) {
-                                  } else {
-                                    return renderVariationImages(image);
-                                  }
-                                })}
-                              </td>
-                            ) : (
-                              ""
-                            )}
-
-                            <td>{item.price}</td>
-
-                            {!hasSize.checked ? "" : <td>{item.size_value}</td>}
-
-                            {!hasColor.checked ? (
-                              ""
-                            ) : (
-                              <td>{item.color_name}</td>
-                            )}
-
+                          {productId ? (
                             <td>
-                              <div className="d-flex justify-content-around">
+                              {item.images.map((image) => {
+                                if (
+                                  image ===
+                                  "https://khaymatapi.mvp-apps.ae/storage/"
+                                ) {
+                                } else {
+                                  return renderVariationImages(image);
+                                }
+                              })}
+                            </td>
+                          ) : (
+                            <td>
+                              {item.images.map((image) => {
+                                if (
+                                  image ===
+                                  "https://khaymatapi.mvp-apps.ae/storage/"
+                                ) {
+                                } else {
+                                  const blobImage = URL.createObjectURL(image);
+
+                                  return renderVariationImages(blobImage);
+                                }
+                              })}
+                            </td>
+                          )}
+
+                          <td>{item.price}</td>
+                          {!hasSize.checked ? "" : <td>{item.size_value}</td>}
+                          {!hasColor.checked ? (
+                            ""
+                          ) : (
+                            <td>
+                              <div
+                                className="dot"
+                                style={{
+                                  backgroundColor: `${item.color_value}`,
+                                }}
+                              ></div>
+                            </td>
+                          )}
+                          <td>
+                            <div className="d-flex justify-content-around">
+                              <i
+                                className="fa fa-trash"
+                                style={{
+                                  cursor: "pointer",
+                                  color: "red",
+                                }}
+                                onClick={(e) => {
+                                  checkPermission(history, "variation.delete");
+                                  handleDeletevariation(e, item.id, index);
+                                }}
+                              ></i>
+
+                              {productId ? (
                                 <i
-                                  className="fa fa-trash"
+                                  className="fa fa-pencil"
                                   style={{
                                     cursor: "pointer",
-                                    color: "red",
+                                    color: "blue",
                                   }}
-                                  onClick={(e) => {
+                                  onClick={() => {
                                     checkPermission(
                                       history,
-                                      "variation.delete"
+                                      "variation.update"
                                     );
-                                    handleDeletevariation(e, item.id, index);
+                                    dispatch(listProductDetails(productId));
+                                    setShowOptions(true);
+                                    setVarId(item.id);
                                   }}
                                 ></i>
-
-                                {productId ? (
-                                  <i
-                                    className="fa fa-pencil"
-                                    style={{
-                                      cursor: "pointer",
-                                      color: "blue",
-                                    }}
-                                    onClick={() => {
-                                      checkPermission(
-                                        history,
-                                        "variation.update"
-                                      );
-                                      dispatch(listProductDetails(productId));
-                                      setShowOptions(true);
-                                      setVarId(item.id);
-                                    }}
-                                  ></i>
-                                ) : (
-                                  ""
-                                )}
-                              </div>
-                            </td>
-                          </tr>
-                        ))
-                      : ""}
-                  </tbody>
-                </Table>
-              </div>
-            </Col>
-      
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    : ""}
+                </tbody>
+              </Table>
+            </div>
+          </Col>
         </div>
       )}
     </>

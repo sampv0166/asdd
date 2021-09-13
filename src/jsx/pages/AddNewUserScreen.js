@@ -554,7 +554,7 @@ const AddNewUserScreen = ({ match, history }) => {
                     </div>
                     <div className="d-flex justify-content-end">
                       <button
-                        className="btn btn-success mt-3 my-2 px-5"
+                        className="btn btn-secondary mt-3 my-2 px-5"
                         type="submit"
                       >
                         Save

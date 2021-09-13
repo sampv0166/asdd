@@ -110,12 +110,12 @@ const AddNewSliderScreen = ({ match, history }) => {
 
   useLayoutEffect(() => {
     //checkPermission(history, "category.add");
-    dispatch(listProducts);
+    dispatch(listProducts(1));
     dispatch(getAllShops());
     dispatch(getSlider());
     populateOptions();
     populateshopOptions();
-  }, [dispatch, show]);
+  }, [dispatch, show, sliderType]);
 
   const validate = Yup.object({
     location: Yup.string()
@@ -176,7 +176,7 @@ const AddNewSliderScreen = ({ match, history }) => {
             }*/
 
             let formdata = new FormData();
-           
+
             if (id !== 0) {
               formdata.append("id", id);
             }
@@ -230,7 +230,6 @@ const AddNewSliderScreen = ({ match, history }) => {
                                     }}
                                     onClick={() => {
                                       slide = Number(item.id);
-                                      
 
                                       setSliderImage(item.fullurl);
                                       setId(Number(item.id));
@@ -327,14 +326,38 @@ const AddNewSliderScreen = ({ match, history }) => {
                 </div>
               </div>
               <Form>
-                <div className="d-flex justify-content-between">
+                <div className="d-flex ">
+                  <div className="col-md-4">
+                    <TextField
+                      label="Aspect Ratio"
+                      name="aspectratio"
+                      type="number"
+                    />
+                  </div>
+
                   <button
-                    className="btn btn-secondary h-50 mt-4"
+                    className="btn btn-secondary mt-4 w-25 h-50 mx-4"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const id =
+                        sliderType === "1"
+                          ? sliders.top && sliders.top[0].id
+                          : sliders.bottom && sliders.bottom[0].id;
+
+                      setId(id);
+                      formik.submitForm();
+                      slide = 0;
+                    }}
+                  >
+                    Update Ratio
+                  </button>
+                  <button
+                    className="btn btn-secondary h-50 my-1 w-25 mx-4 mt-4"
                     onClick={(e) => {
                       e.preventDefault();
                       formik.setFieldValue("image", "");
                       setSliderImage("");
-                      setId(0)
+                      setId(0);
                       setShow({ status: true, action: "add", value: "" });
                       setSelectedProductOption(null);
                       setSelectedOption(null);
@@ -387,13 +410,6 @@ const AddNewSliderScreen = ({ match, history }) => {
                     <div className="col-md-12">
                       <div className="row g-3">
                         <div className="col-md-4 h-auto">
-                          <TextField
-                            label="Aspect Ratio"
-                            name="aspectratio"
-                            type="number"
-                          />
-                        </div>
-                        <div className="col-md-4 h-auto">
                           <label>Link To Product</label>
                           <Select
                             options={populateOptions()}
@@ -429,7 +445,7 @@ const AddNewSliderScreen = ({ match, history }) => {
                   </Modal.Body>
                   <div className="d-flex justify-content-end">
                     <button
-                      className="btn btn-success mt-3 my-2 w-25"
+                      className="btn btn-secondary mt-3 my-2 w-25"
                       onClick={(e) => {
                         e.preventDefault();
                         if (
