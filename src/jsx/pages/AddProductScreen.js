@@ -402,7 +402,7 @@ const AddProductScreen = ({ history, match }) => {
     objects.unshift({ key: "choose", value: "" });
     return objects;
   };
-
+  
   const shopListDetails = useSelector((state) => state.shopListDetails);
   const { loading, error, shop } = shopListDetails;
 

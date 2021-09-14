@@ -3,7 +3,11 @@ import { Button, Card, Table } from "react-bootstrap";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { deleteCoupon, getCoupons } from "../../actions/couponsActions";
+import {
+  deleteCoupon,
+  getCoupons,
+  listCouponDetails,
+} from "../../actions/couponsActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { checkPermissionOnSubmit } from "./checkpermission";
@@ -16,6 +20,7 @@ const CouponsScreen = ({ history }) => {
 
   useEffect(() => {
     dispatch(getCoupons(""));
+    // dispatch(listCouponDetails(0));
   }, [dispatch]);
 
   const deleteCouponHandler = async (id) => {

@@ -52,7 +52,6 @@ const AddNewCategoryScreen = ({ match, history }) => {
 
   useLayoutEffect(() => {
     checkPermission(history, "category.add");
-
     dispatch(listCategoryDetails(categoryId));
   }, [dispatch, categoryId]);
 

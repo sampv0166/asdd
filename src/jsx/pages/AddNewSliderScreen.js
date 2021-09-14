@@ -32,7 +32,7 @@ const AddNewSliderScreen = ({ match, history }) => {
   const [top, setTop] = useState({ checked: false });
   const [bottom, setBottom] = useState({ checked: false });
 
-
+  
   const [deleteimageurl, setDeletedimageurl] = useState([]);
   const [show, setShow] = useState({ status: false, action: 'add', value: 0 });
   const [shopid, setShopId] = useState(null);
@@ -49,6 +49,7 @@ const AddNewSliderScreen = ({ match, history }) => {
   const { loading: slidersLoading, slidersError, sliders } = sliderList;
 
   const [selectedOption, setSelectedOption] = useState(null);
+
   const [selectedProductOption, setSelectedProductOption] = useState(null);
 
   const productList = useSelector((state) => state.productList);
