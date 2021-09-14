@@ -24,6 +24,7 @@ import Select from "react-select";
 const AddNewCouponscreen = ({ history, match }) => {
   const [percentage, setIsPercentage] = useState({ checked: false });
   const [selectedOption, setSelectedOption] = useState([]);
+  const [selectedShopOption, setSelectedShopOption] = useState([]);
 
   const [selectedProducts, setSelectedproducts] = useState([]);
   const [coupon, setCoupon] = useState([]);
@@ -60,20 +61,20 @@ const AddNewCouponscreen = ({ history, match }) => {
     if (user.user.typeofuser === "A" || user.user.typeofuser === "U") {
       let objects = [2];
       objects[0] = {
-        key: shop.shop_name,
+        label: shop.shop_name,
         value: shop.id,
       };
-      objects.unshift({ key: "choose", value: "" });
+      objects.unshift({ label: "choose", value: "" });
       return objects;
     }
 
     if (user.user.typeofuser === "S") {
       let objects = [shops.length];
       for (var x = 0; x < shops.length; x++) {
-        objects[x] = { key: shops[x].shop_name_en, value: shops[x].id };
+        objects[x] = { label: shops[x].shop_name_en, value: shops[x].id };
       }
 
-      objects.unshift({ key: "Choose A Shop", value: "" });
+      objects.unshift({ label: "Choose A Shop", value: "" });
       return objects;
     }
   };
@@ -85,24 +86,6 @@ const AddNewCouponscreen = ({ history, match }) => {
     }
     return objects;
   };
-
-  const onSelectProduct = (data) => {
-    setSelectedproducts(data);
-  };
-
-  const onRemoveProduct = (data) => {
-    setSelectedproducts(data);
-  };
-
-  const onSelectShop = (data) => {
-    setSelectedShops(data);
-  };
-
-  const onRemoveShop = (data) => {
-    setSelectedShops(data);
-  };
-
-  let b;
 
   const PopulateProductIds = (products_ids) => {
     let b = products_ids.split(",").map((item) => {
@@ -134,7 +117,7 @@ const AddNewCouponscreen = ({ history, match }) => {
         setIsPercentage({ checked: false });
       }
     }
-  }, [coupon, re, selectedOption]);
+  }, [coupon, re]);
 
   useEffect(() => {
     checkPermission(history, "coupon.add");
@@ -145,7 +128,14 @@ const AddNewCouponscreen = ({ history, match }) => {
       }
     }
 
-    console.log();
+    if (user.user.typeofuser === "U" || user.user.typeofuser === "A") {
+      dispatch(listShopDetails(user.user.shop_id));
+      populateShops();
+    }
+    if (user.user.typeofuser === "S") {
+      dispatch(getAllShops());
+      populateShops();
+    }
 
     couponsList.coupons.map((item) => {
       if (couponId == item.id) {
@@ -153,6 +143,10 @@ const AddNewCouponscreen = ({ history, match }) => {
         setCoupon(item);
         if (item.product_ids !== null) {
           PopulateProductIds(item.product_ids);
+          setSelectedShopOption({
+            value: item.shop_id,
+            label: item.shop.shop_name_en,
+          });
         }
       }
     });
@@ -189,9 +183,8 @@ const AddNewCouponscreen = ({ history, match }) => {
             value: coupon.value || "",
             expiry: coupon.expired_at || "",
             expire: "",
-            shop_id: coupon.shop_id || "",
-            pp: true,
-            product_id: 395,
+            shop_id: [],
+            product_id: [],
           }}
           validationSchema={validate}
           onSubmit={(values) => {
@@ -208,32 +201,35 @@ const AddNewCouponscreen = ({ history, match }) => {
               formdata.append("id", couponId);
             }
 
-            let objects = new Array(selectedProducts.length);
+            let objects = new Array(values.product_id.length);
+
             let CommaSeperated;
-            for (var x = 0; x < selectedProducts.length; x++) {
-              objects[x] = selectedProducts[x].value + "";
+            for (var x = 0; x < values.product_id.length; x++) {
+              objects[x] = values.product_id[x].value + "";
               if (x === 0) {
-                CommaSeperated = selectedProducts[x].value;
+                CommaSeperated = values.product_id[x].value;
               } else {
                 CommaSeperated =
-                  CommaSeperated + "," + selectedProducts[x].value;
+                  CommaSeperated + "," + values.product_id[x].value;
               }
             }
 
+            console.log(CommaSeperated);
+
             formdata.append("product_ids", CommaSeperated);
+            console.log(values.expiry);
             formdata.append("expired_at", values.expiry);
             formdata.append("code", values.code);
             formdata.append("description_en", values.description_en);
             formdata.append("description_ar", values.description_ar);
             formdata.append("value", values.value);
-            formdata.append("ispercentage", values.ispercentage);
 
             if (user.user.typeofuser === "S") {
-              formdata.append("shop_id", values.shop_id);
+              formdata.append("shop_id", values.shop_id.value);
             }
-
+            console.log(values.shop_id);
             if (user.user.typeofuser === "A" || user.user.typeofuser === "U") {
-              formdata.append("shop_id", shop.id);
+              formdata.append("shop_id", values.shop_id.value);
             }
 
             if (values.ispercentage === true) {
@@ -254,15 +250,15 @@ const AddNewCouponscreen = ({ history, match }) => {
                 <div className="col-6">
                   <TextField label="Value" name="value" type="number" />
                 </div>
-                {/*<div className="col-6">
+                <div className="col-6">
                   <TextField
                     label="Descritpion English"
                     name="description_en"
                     type="text"
                   />
-          </div>*/}
+                </div>
               </div>
-              {/*<div className="row g-3">
+              <div className="row g-3">
                 <div className="col-6">
                   <TextField
                     label="Descritpion Arabic"
@@ -270,7 +266,7 @@ const AddNewCouponscreen = ({ history, match }) => {
                     type="text"
                   />
                 </div>
-        </div>*/}
+              </div>
               <div className="col-6">
                 <div class="form-check form-switch my-3">
                   <input
@@ -316,7 +312,24 @@ const AddNewCouponscreen = ({ history, match }) => {
                     name="product_id"
                     onChange={(e) => {
                       setSelectedOption(e);
-                      console.log(e)
+                      formik.setFieldValue("product_id", e);
+                      console.log(e);
+                    }}
+                  />
+                </div>
+
+                <div className="col-xl-3 my-4">
+                  <p className="mb-1">Select Shop</p>
+                  <Select
+                    options={populateShops()}
+                    value={selectedShopOption}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                    name="shop_id"
+                    onChange={(e) => {
+                      setSelectedShopOption(e);
+                      formik.setFieldValue("shop_id", e);
+                      console.log(e);
                     }}
                   />
                 </div>
