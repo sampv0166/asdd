@@ -213,7 +213,7 @@ const Markup = ({ history }) => {
         ) : (
           ""
         )}
-        <div className="content-body">
+        <div className="content-body" >
           <div className="container-fluid">
             <Switch>
               {routes.map((data, i) => (

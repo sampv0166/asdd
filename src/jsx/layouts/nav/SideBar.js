@@ -111,7 +111,7 @@ const SideBar = () => {
     table = ["table-bootstrap-basic", "table-datatable-basic"];
 
   return (
-    <div className="deznav">
+    <div className="deznav  " id="no-print">
       <PerfectScrollbar className="deznav-scroll">
         <MM className="metismenu" id="menu">
           <li

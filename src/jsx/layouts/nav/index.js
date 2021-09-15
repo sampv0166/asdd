@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 
-const JobieNav = ({ title , history }) => {
+const JobieNav = ({ title, history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
@@ -20,9 +20,9 @@ const JobieNav = ({ title , history }) => {
       ) : error ? (
         <Message>error</Message>
       ) : (
-        <>
+        <div className="no-print">
           <NavHader />
-          <SideBar  />
+          <SideBar />
           <Header
             onNote={() => onClick("chatbox")}
             onNotification={() => onClick("notification")}
@@ -30,10 +30,10 @@ const JobieNav = ({ title , history }) => {
             toggle={toggle}
             title={title}
             onBox={() => onClick("box")}
-            history = {history}
+            history={history}
           />
           <ChatBox onClick={() => onClick("chatbox")} toggle={toggle} />
-        </>
+        </div>
       )}
     </Fragment>
   );

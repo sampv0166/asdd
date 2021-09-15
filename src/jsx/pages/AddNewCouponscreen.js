@@ -117,7 +117,7 @@ const AddNewCouponscreen = ({ history, match }) => {
         setIsPercentage({ checked: false });
       }
     }
-  }, [coupon, re]);
+  }, [dispatch, coupon, re]);
 
   useEffect(() => {
     checkPermission(history, "coupon.add");
@@ -182,8 +182,8 @@ const AddNewCouponscreen = ({ history, match }) => {
             description_ar: coupon.description_ar || "",
             value: coupon.value || "",
             expiry: coupon.expired_at || "",
-            expire: "",
-            shop_id: [],
+            expire: coupon.expired_at || "",
+            shop_id: "",
             product_id: [],
           }}
           validationSchema={validate}
@@ -200,23 +200,36 @@ const AddNewCouponscreen = ({ history, match }) => {
             if (couponId) {
               formdata.append("id", couponId);
             }
-
-            let objects = new Array(values.product_id.length);
-
+            let newArray;
             let CommaSeperated;
-            for (var x = 0; x < values.product_id.length; x++) {
-              objects[x] = values.product_id[x].value + "";
-              if (x === 0) {
-                CommaSeperated = values.product_id[x].value;
-              } else {
-                CommaSeperated =
-                  CommaSeperated + "," + values.product_id[x].value;
-              }
+            if (selectedOption !== null) {
+              newArray = selectedOption.filter(
+                (value) => JSON.stringify(value) !== "{}"
+              );
             }
 
+            console.log(newArray);
+            if (newArray !== null && newArray !== undefined) {
+              let objects = new Array(newArray.length);
+              for (var x = 0; x < newArray.length; x++) {
+                objects[x] = newArray[x].value + "";
+                if (x === 0) {
+                  CommaSeperated = newArray[x].value;
+                } else {
+                  CommaSeperated = CommaSeperated + "," + newArray[x].value;
+                }
+              }
+            }
             console.log(CommaSeperated);
+            if (
+              CommaSeperated !== undefined &&
+              CommaSeperated !== null &&
+              CommaSeperated !== ""
+            ) {
+              formdata.append("product_ids", CommaSeperated);
+            } else {
+            }
 
-            formdata.append("product_ids", CommaSeperated);
             console.log(values.expiry);
             formdata.append("expired_at", values.expiry);
             formdata.append("code", values.code);
@@ -224,12 +237,19 @@ const AddNewCouponscreen = ({ history, match }) => {
             formdata.append("description_ar", values.description_ar);
             formdata.append("value", values.value);
 
-            if (user.user.typeofuser === "S") {
-              formdata.append("shop_id", values.shop_id.value);
+            if (
+              selectedShopOption !== null &&
+              selectedShopOption.value !== undefined &&
+              selectedShopOption.value !== null &&
+              selectedShopOption.value !== ""
+            ) {
+              formdata.append("shop_id", selectedShopOption.value);
+            } else {
             }
+
             console.log(values.shop_id);
             if (user.user.typeofuser === "A" || user.user.typeofuser === "U") {
-              formdata.append("shop_id", values.shop_id.value);
+              formdata.append("shop_id", values.shop_id);
             }
 
             if (values.ispercentage === true) {
@@ -243,105 +263,127 @@ const AddNewCouponscreen = ({ history, match }) => {
         >
           {(formik) => (
             <Form>
-              <div className="row g-3">
+              <div>
+                <div className="row g-3">
+                  <div className="col-6">
+                    <TextField label="Code" name="code" type="text" />
+                  </div>
+                  <div className="col-6">
+                    <TextField label="Value" name="value" type="number" />
+                  </div>
+                  <div className="col-6">
+                    <TextField
+                      label="Descritpion English"
+                      name="description_en"
+                      type="text"
+                    />
+                  </div>
+                  <div className="col-6">
+                    <TextField
+                      label="Descritpion Arabic"
+                      name="description_ar"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-xl-4 my-4">
+                    <p className="mb-1">Select Product</p>
+                    <Select
+                      styles={{
+                        control: (styles) => ({
+                          background: "#fff",
+                          border: "1px solid rgba(174, 121, 179, 0.39)",
+                          color: "#6e6e6e",
+                        }),
+                      }}
+                      options={populateOptions()}
+                      value={selectedOption}
+                      isMulti
+                      className="basic-multi-select"
+                      classNamePrefix="select"
+                      name="product_id"
+                      onChange={(e) => {
+                        setSelectedOption(e);
+                        formik.setFieldValue("product_id", e);
+                        console.log(e);
+                      }}
+                    />
+                  </div>
+
+                  <div className="col-xl-4 my-4">
+                    <p className="mb-1">Select Shop</p>
+                    <Select
+                      styles={{
+                        control: (styles) => ({
+                          background: "#fff",
+                          border: "1px solid rgba(174, 121, 179, 0.39)",
+                          color: "#6e6e6e",
+                          overflow: "visible",
+                        }),
+                      }}
+                      options={populateShops()}
+                      value={selectedShopOption}
+                      className="basic-multi-select"
+                      classNamePrefix="select"
+                      name="shop_id"
+                      isClearable
+                      onChange={(e) => {
+                        setSelectedShopOption(e);
+                        formik.setFieldValue("shop_id", e);
+                        console.log(e);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-xl-3 my-4">
+                    <label
+                      label="Expiry date"
+                      name="expiry"
+                      className="my-2 mx-2"
+                    >
+                      {`Expiry Date : ${formik.values.expiry}`}
+                    </label>
+                    <input
+                      className="form-control"
+                      label="Expiry date"
+                      name="expire"
+                      type="datetime-local"
+                      onChange={(e) => {
+                        formik.setFieldValue("expiry", e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+
                 <div className="col-6">
-                  <TextField label="Code" name="code" type="text" />
+                  <div class="form-check form-switch my-3">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexSwitchCheckDefault"
+                      checked={percentage.checked}
+                      onChange={(d) => {
+                        percentage.checked === true ? (d = false) : (d = true);
+                        setIsPercentage({ checked: d });
+                        formik.setFieldValue("ispercentage", d);
+                      }}
+                    />
+
+                    <label
+                      class="form-check-label"
+                      for="flexSwitchCheckDefault"
+                    >
+                      Is percentage
+                    </label>
+                  </div>
                 </div>
-                <div className="col-6">
-                  <TextField label="Value" name="value" type="number" />
-                </div>
-                <div className="col-6">
-                  <TextField
-                    label="Descritpion English"
-                    name="description_en"
-                    type="text"
-                  />
-                </div>
+
+                <button className="btn btn-secondary mt-3 my-2" type="submit">
+                  Save
+                </button>
               </div>
-              <div className="row g-3">
-                <div className="col-6">
-                  <TextField
-                    label="Descritpion Arabic"
-                    name="description_ar"
-                    type="text"
-                  />
-                </div>
-              </div>
-              <div className="col-6">
-                <div class="form-check form-switch my-3">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="flexSwitchCheckDefault"
-                    checked={percentage.checked}
-                    onChange={(d) => {
-                      percentage.checked === true ? (d = false) : (d = true);
-                      setIsPercentage({ checked: d });
-                      formik.setFieldValue("ispercentage", d);
-                    }}
-                  />
-
-                  <label class="form-check-label" for="flexSwitchCheckDefault">
-                    Is percentage
-                  </label>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-xl-3 my-4">
-                  <p className="mb-1">Change Expiry Date</p>
-                  <input
-                    className="form-control"
-                    label="Expiry date"
-                    name="expire"
-                    type="date"
-                    onChange={(e) => {
-                      formik.setFieldValue("expiry", e.target.value);
-                      formik.setFieldValue("expire", e.target.value);
-                    }}
-                  />
-                </div>
-
-                <div className="col-xl-3 my-4">
-                  <p className="mb-1">Select Product</p>
-                  <Select
-                    options={populateOptions()}
-                    value={selectedOption}
-                    isMulti
-                    className="basic-multi-select"
-                    classNamePrefix="select"
-                    name="product_id"
-                    onChange={(e) => {
-                      setSelectedOption(e);
-                      formik.setFieldValue("product_id", e);
-                      console.log(e);
-                    }}
-                  />
-                </div>
-
-                <div className="col-xl-3 my-4">
-                  <p className="mb-1">Select Shop</p>
-                  <Select
-                    options={populateShops()}
-                    value={selectedShopOption}
-                    className="basic-multi-select"
-                    classNamePrefix="select"
-                    name="shop_id"
-                    onChange={(e) => {
-                      setSelectedShopOption(e);
-                      formik.setFieldValue("shop_id", e);
-                      console.log(e);
-                    }}
-                  />
-                </div>
-
-                <div className="col-4 my-4">
-                  <TextField label="Expiry date" name="expiry" type="text" />
-                </div>
-              </div>
-
-              <button className="btn btn-secondary mt-3 my-2" type="submit">
-                Save
-              </button>
             </Form>
           )}
         </Formik>

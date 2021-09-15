@@ -53,7 +53,7 @@ const Header = ({ onNote, toggle, onProfile, onNotification, onBox }) => {
     ? filterName.filter((f) => f !== "editor")
     : filterName;
   return (
-    <div className="header">
+    <div className="header" id="no-print">
       <div className="header-content">
         <nav className="navbar navbar-expand">
           <div className="collapse navbar-collapse justify-content-between">
@@ -326,7 +326,7 @@ const Header = ({ onNote, toggle, onProfile, onNotification, onBox }) => {
                   }`}
                   onClick={() => onProfile()}
                 >
-                  <h4 className = 'mx-2'>{userInfo.user.name}</h4>
+                  <h4 className="mx-2">{userInfo.user.name}</h4>
                   <img
                     src={
                       userInfo.user.photolink !== null

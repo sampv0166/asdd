@@ -17,7 +17,7 @@ const Products = ({ product, history }) => {
           >
             <div
               className="new-arrivals-img-contnent"
-              style={{ height: "150px", objectFit: "contain" }}
+              style={{ height: "100px", objectFit: "contain" }}
             >
               <img
                 className="img-fluid"
@@ -26,7 +26,7 @@ const Products = ({ product, history }) => {
                   product.variations[0].images[0]
                 }
                 alt=""
-                style={{ height: "150px", objectFit: "contain" }}
+                style={{ height: "100px", objectFit: "contain" }}
               />
             </div>
 
