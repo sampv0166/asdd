@@ -64,6 +64,7 @@ import {
   settingsCreateReducer,
   settingsListReducer,
 } from "./reducers/settingsReducer";
+import { analyticsReducer } from "./reducers/analyticsReducer";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -121,6 +122,8 @@ const reducer = combineReducers({
 
   listSettings: settingsListReducer,
   updateSettings: settingsCreateReducer,
+
+  analytics : analyticsReducer
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

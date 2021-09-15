@@ -71,7 +71,6 @@ const AddNewCouponscreen = ({ history, match }) => {
         label: shop.shop_name,
         value: shop.id,
       };
-
       return objects;
     }
 
@@ -156,6 +155,7 @@ const AddNewCouponscreen = ({ history, match }) => {
       dispatch(listShopDetails(user.user.shop_id));
       populateShops();
     }
+
     if (user.user.typeofuser === "S") {
       dispatch(getAllShops());
       populateShops();
@@ -167,6 +167,11 @@ const AddNewCouponscreen = ({ history, match }) => {
         setCoupon(item);
         if (item.product_ids !== null) {
           PopulateProductIds(item.product_ids);
+          setSelectedShopOption({
+            value: item.shop_id,
+            label: item.shop.shop_name_en,
+          });
+        } else {
           setSelectedShopOption({
             value: item.shop_id,
             label: item.shop.shop_name_en,
@@ -273,11 +278,6 @@ const AddNewCouponscreen = ({ history, match }) => {
             } else {
             }
 
-            console.log(values.shop_id);
-            if (user.user.typeofuser === "A" || user.user.typeofuser === "U") {
-              formdata.append("shop_id", selectedShopOption.value);
-            }
-
             if (values.ispercentage === true) {
               formdata.append("ispercentage", 1);
             } else {
@@ -336,31 +336,34 @@ const AddNewCouponscreen = ({ history, match }) => {
                       }}
                     />
                   </div>
-
-                  <div className="col-xl-4 my-4">
-                    <p className="mb-1">Select Shop</p>
-                    <Select
-                      styles={{
-                        control: (styles) => ({
-                          background: "#fff",
-                          border: "1px solid rgba(174, 121, 179, 0.39)",
-                          color: "#6e6e6e",
-                          overflow: "visible",
-                        }),
-                      }}
-                      options={populateShops()}
-                      value={selectedShopOption}
-                      className="basic-multi-select"
-                      classNamePrefix="select"
-                      name="shop_id"
-                      isClearable
-                      onChange={(e) => {
-                        setSelectedShopOption(e);
-                        formik.setFieldValue("shop_id", e);
-                        console.log(e);
-                      }}
-                    />
-                  </div>
+                  {user.user.typeofuser === "S" ? (
+                    <div className="col-xl-4 my-4">
+                      <p className="mb-1">Select Shop</p>
+                      <Select
+                        styles={{
+                          control: (styles) => ({
+                            background: "#fff",
+                            border: "1px solid rgba(174, 121, 179, 0.39)",
+                            color: "#6e6e6e",
+                            overflow: "visible",
+                          }),
+                        }}
+                        options={populateShops()}
+                        value={selectedShopOption}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        name="shop_id"
+                        isClearable
+                        onChange={(e) => {
+                          setSelectedShopOption(e);
+                          formik.setFieldValue("shop_id", e);
+                          console.log(e);
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div className="row">
                   <div className="col-xl-3 my-4">
