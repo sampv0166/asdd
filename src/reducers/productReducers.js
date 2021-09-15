@@ -1,4 +1,7 @@
 import {
+  ALL_PRODUCT_LIST_FAIL,
+  ALL_PRODUCT_LIST_REQUEST,
+  ALL_PRODUCT_LIST_SUCCESS,
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
@@ -21,6 +24,22 @@ import {
   SEARCH_PRODUCT_REQUEST,
   SEARCH_PRODUCT_SUCCESS,
 } from "../constants/productConstants";
+
+export const allProductsReducer = (state = { allproducts: [] }, action) => {
+  switch (action.type) {
+    case ALL_PRODUCT_LIST_REQUEST:
+      return { loading: true, allproducts: [] };
+    case ALL_PRODUCT_LIST_SUCCESS:
+      return {
+        loading: false,
+        allproducts: action.payload.data,
+      };
+    case ALL_PRODUCT_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 
 export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {

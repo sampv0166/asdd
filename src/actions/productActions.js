@@ -1,6 +1,9 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/Globals";
 import {
+  ALL_PRODUCT_LIST_FAIL,
+  ALL_PRODUCT_LIST_REQUEST,
+  ALL_PRODUCT_LIST_SUCCESS,
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
@@ -21,6 +24,40 @@ import {
   SEARCH_PRODUCT_SUCCESS,
 } from "../constants/productConstants";
 import { createVariation, updateVariation } from "./variationActions";
+
+export const getallProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: ALL_PRODUCT_LIST_REQUEST });
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.success.token}`,
+      },
+    };
+
+    
+    const  data  = await axios.get(
+      `${BASE_URL}api/v2/admin/fetchallprods`,
+      config
+    );
+
+    console.log(data)
+
+    dispatch({
+      type: ALL_PRODUCT_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_PRODUCT_LIST_FAIL,
+      payload:
+        error.response && error.response.data.error
+          ? error.response.data.error
+          : error.message,
+    });
+  }
+};
 
 export const searchProducts = (keyword) => async (dispatch) => {
   try {
@@ -58,7 +95,6 @@ export const searchProducts = (keyword) => async (dispatch) => {
 
 export const listProducts =
   (pageNumber, keyword, shopid) => async (dispatch) => {
-
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));

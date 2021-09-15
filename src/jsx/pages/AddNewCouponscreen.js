@@ -17,7 +17,7 @@ import moment from "moment";
 import checkPermission, { checkPermissionOnSubmit } from "./checkpermission";
 import { getAllShops, listShopDetails } from "../../actions/shopActions";
 
-import { listProducts } from "../../actions/productActions";
+import { getallProducts, listProducts } from "../../actions/productActions";
 import { DataEditing } from "@syncfusion/ej2-react-charts";
 import Select from "react-select";
 
@@ -49,6 +49,13 @@ const AddNewCouponscreen = ({ history, match }) => {
     pages,
   } = productList;
 
+  const allProducts = useSelector((state) => state.allProducts);
+  const {
+    allproductloading: loading,
+    allproducterror: error,
+    allproducts,
+  } = allProducts;
+
   const shopListDetails = useSelector((state) => state.shopListDetails);
   const { loading: load, error: err, shop } = shopListDetails;
 
@@ -64,7 +71,7 @@ const AddNewCouponscreen = ({ history, match }) => {
         label: shop.shop_name,
         value: shop.id,
       };
-      objects.unshift({ label: "choose", value: "" });
+
       return objects;
     }
 
@@ -80,11 +87,23 @@ const AddNewCouponscreen = ({ history, match }) => {
   };
 
   const populateOptions = () => {
-    let objects = [products.length];
-    for (var x = 0; x < products.length; x++) {
-      objects[x] = { value: products[x].id, label: products[x].name_en };
+    if (user.user.typeofuser === "U" || user.user.typeofuser === "A") {
+      let objects = [products.length];
+      for (var x = 0; x < products.length; x++) {
+        objects[x] = { value: products[x].id, label: products[x].name_en };
+      }
+      return objects;
     }
-    return objects;
+    if (user.user.typeofuser === "S") {
+      let objects = [allproducts.length];
+      for (var x = 0; x < allproducts.length; x++) {
+        objects[x] = {
+          value: allproducts[x].id,
+          label: allproducts[x].name_en,
+        };
+      }
+      return objects;
+    }
   };
 
   const PopulateProductIds = (products_ids) => {
@@ -108,7 +127,12 @@ const AddNewCouponscreen = ({ history, match }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listProducts(1, "", ""));
+    if (user.user.typeofuser === "U" || user.user.typeofuser === "A") {
+      dispatch(listProducts(1, "", ""));
+    }
+    if (user.user.typeofuser === "S") {
+      dispatch(getallProducts());
+    }
 
     if (coupon) {
       if (coupon.ispercentage === true) {
@@ -157,6 +181,8 @@ const AddNewCouponscreen = ({ history, match }) => {
       .min(1, "Name must be atleast one character")
       .required("Required"),
     value: Yup.number().required("required"),
+    description_en: Yup.string().required("required"),
+    description_ar: Yup.string().required("required"),
   });
 
   const handleSubmit = async (formdata) => {
@@ -249,7 +275,7 @@ const AddNewCouponscreen = ({ history, match }) => {
 
             console.log(values.shop_id);
             if (user.user.typeofuser === "A" || user.user.typeofuser === "U") {
-              formdata.append("shop_id", values.shop_id);
+              formdata.append("shop_id", selectedShopOption.value);
             }
 
             if (values.ispercentage === true) {
