@@ -98,7 +98,7 @@ const AddNewUserScreen = ({ match, history }) => {
 
   useEffect(() => {
     if (userId && user) {
-      setUserImage(user.photolink);
+      setUserImage(user.photo);
       if (user.permissions && user.permissions.includes("product.add")) {
         setProdadd({ checked: true });
       } else {

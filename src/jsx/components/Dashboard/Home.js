@@ -7,7 +7,7 @@ import { listOrders } from "../../../actions/orderActions";
 import avatar from "../../../images/avatar/5.png";
 import Loader from "../Loader";
 import Message from "../Message";
-const Home = () => {
+const Home = ({ history }) => {
   const analytics = useSelector((state) => state.analytics);
   const { loading, error, analysis } = analytics;
 
@@ -56,7 +56,7 @@ const Home = () => {
                       <i className="flaticon-381-box"></i>
                     </span>
                     <div className="media-body text-white text-right">
-                      <p className="mb-1">Latest Users</p>
+                      <p className="mb-1">Total Products</p>
                       <h3 className="text-white">{analysis.products}</h3>
                     </div>
                   </div>
@@ -103,12 +103,12 @@ const Home = () => {
                 <Card.Body>
                   <Row>
                     <div className="col">
-                      <div className="widget-stat card bg-dark">
-                        <div className="card-body  p-4">
+                      <div className="widget-stat card bg-white ">
+                        <div className="card-body shadow-lg p-4">
                           <div className="media">
-                            <div className="media-body text-white">
+                            <div className="media-body text-dark">
                               <p className="mb-1">Pending</p>
-                              <h3 className="text-white">
+                              <h3 className="text-dark">
                                 {" "}
                                 {analysis.pendingorders.length}
                               </h3>
@@ -118,12 +118,12 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="col">
-                      <div className="widget-stat card bg-blue">
-                        <div className="card-body  p-4">
+                      <div className="widget-stat card bg-white">
+                        <div className="card-body shadow-lg p-4">
                           <div className="media">
-                            <div className="media-body text-white">
-                              <p className="mb-1">Confirmed</p>
-                              <h3 className="text-white">
+                            <div className="media-body text-blue">
+                              <p className="mb-1">Ready For Shipment</p>
+                              <h3 className="text-blue">
                                 {" "}
                                 {analysis.confirmedorders.length}
                               </h3>
@@ -132,30 +132,16 @@ const Home = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col">
-                      <div className="widget-stat card bg-primary">
-                        <div className="card-body  p-4">
-                          <div className="media">
-                            <div className="media-body text-white">
-                              <p className="mb-1">Delivered</p>
-                              <h3 className="text-white">
-                                {" "}
-                                {analysis.deliveredorders.length}
-                              </h3>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                
                   </Row>
                   <Row>
                     <div className="col">
-                      <div className="widget-stat card bg-danger">
-                        <div className="card-body  p-4">
+                      <div className="widget-stat card bg-white">
+                        <div className="card-body shadow-lg  p-4">
                           <div className="media">
-                            <div className="media-body text-white">
+                            <div className="media-body text-danger">
                               <p className="mb-1">Cancelled</p>
-                              <h3 className="text-white">
+                              <h3 className="text-danger">
                                 {analysis.cancelledorders.length}
                               </h3>
                             </div>
@@ -164,19 +150,34 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="col">
-                      <div className="widget-stat card bg-warning">
-                        <div className="card-body  p-4">
+                      <div className="widget-stat card bg-white">
+                        <div className="card-body shadow-lg p-4">
                           <div className="media">
-                            <div className="media-body text-white">
-                              <p className="mb-1">Rejected</p>
-                              <h3 className="text-white">
-                                {analysis.rejectedorders.length}
+                            <div className="media-body text-success">
+                              <p className="mb-1">Delivered</p>
+                              <h3 className="text-success">
+                                {" "}
+                                {analysis.deliveredorders.length}
                               </h3>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                    {/*<div className="col">
+                      <div className="widget-stat card bg-white">
+                        <div className="card-body shadow-lg p-4">
+                          <div className="media">
+                            <div className="media-body text-warning">
+                              <p className="mb-1">Rejected</p>
+                              <h3 className="text-warning">
+                                {analysis.rejectedorders.length}
+                              </h3>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+      </div>*/}
                   </Row>
                 </Card.Body>
               </Card>
@@ -184,64 +185,27 @@ const Home = () => {
             <div className="col-xl-6 col-lg-12 ">
               <div className="card">
                 <div className="card-header border-0 pb-0">
-                  <h4 className="card-title">Top Products</h4>
+                  <h4 className="card-title">Latest Users</h4>
                 </div>
                 <div className="card-body pb-0">
                   <div className="widget-media">
                     <ul className="timeline">
-                      <li>
-                        <div className="timeline-panel">
-                          <div className="media mr-2">
-                            <img alt="" width="50" src={avatar} />
-                          </div>
-                          <div className="media-body">
-                            <h5 className="mb-1">Product Name</h5>
-                          </div>
-                          <Dropdown className="dropdown">
-                            <Dropdown.Toggle
-                              variant="primary light"
-                              className="icon-false sharp"
-                            >
-                              <svg
-                                width="18px"
-                                height="18px"
-                                viewBox="0 0 24 24"
-                                version="1.1"
-                              >
-                                <g
-                                  stroke="none"
-                                  strokeWidth="1"
-                                  fill="none"
-                                  fillRule="evenodd"
-                                >
-                                  <rect x="0" y="0" width="24" height="24" />
-                                  <circle fill="#000000" cx="5" cy="12" r="2" />
-                                  <circle
-                                    fill="#000000"
-                                    cx="12"
-                                    cy="12"
-                                    r="2"
-                                  />
-                                  <circle
-                                    fill="#000000"
-                                    cx="19"
-                                    cy="12"
-                                    r="2"
-                                  />
-                                </g>
-                              </svg>
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu className="dropdown-menu">
-                              <Dropdown.Item className="dropdown-item" href="#">
-                                Edit
-                              </Dropdown.Item>
-                              <Dropdown.Item className="dropdown-item" href="#">
-                                Delete
-                              </Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </div>
-                      </li>
+                      {analysis.last10users.map((item, i) => (
+                        <li>
+                          {i < 5 ? (
+                            <div className="timeline-panel">
+                              <div className="media mr-2">
+                                <img alt="" width="50" src={item.photolink} />
+                              </div>
+                              <div className="media-body">
+                                <h5 className="mb-1">{item.name}</h5>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
@@ -264,7 +228,12 @@ const Home = () => {
                   </thead>
                   <tbody>
                     {orders.map((item, index) => (
-                      <tr>
+                      <tr
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          history.push(`/orders/orderdetails/${item.id}`);
+                        }}
+                      >
                         <td>{`Order #${item.id}`}</td>
                         <td>{item.user.name}</td>
 

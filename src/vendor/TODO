@@ -17,5 +17,26 @@ setting shop as inactive(status) still shows in mobile app
 
 orders not showing for admin 
 
-{{baseurl}}/api/v2/public/searchprodandshops?search=''
+{{baseurl}}/api/v2/public/searchprodandshops?search=''\
+
+
+
+
+Dashboard - if system admin get overall dashboard details
+
+Sliders not updating if null
+Invoice discount - backend issue
+Vat - backend issue 
+Giv me all shops even if its not active orbits not open
+add confirmed option in order status
+
+
+Search products by shop
+Dashboard display
+Permissions
+ Order invoice and printing
+Coupon can be linked to multiple products
+Sliders can be linked to product or shop
+Delivery charges
+Show active only when updating product
 

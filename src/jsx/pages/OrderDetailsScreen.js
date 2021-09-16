@@ -8,8 +8,9 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import ReactToPrint from "react-to-print";
 import Logo from "../.././images/logo.png";
+import OrderDetailsScreenforPrint from "./OrderDetailsScreenold";
 
-const OrderDetailsScreenforPrint = ({ match, history, setHasVariant }) => {
+const OrderDetailsScreen = ({ match, history, setHasVariant }) => {
   const orderDetailsList = useSelector((state) => state.orderDetailsList);
   const { loading, error, ordersDetails } = orderDetailsList;
   const componentRef = useRef();
@@ -42,7 +43,21 @@ const OrderDetailsScreenforPrint = ({ match, history, setHasVariant }) => {
           {ordersDetails && ordersDetails.user && (
             <div className="row">
               <div className="col-lg-12">
-                <div className="card mt-3">
+                <div className="card">
+                  <div className="d-flex justify-content-center bg-light shadow-sm">
+                    <div className="brand-logo mb-3">
+                      <img
+                        className="logo-abbr mr-2 img-fluid"
+                        src={Logo}
+                        alt=""
+                        style={{
+                          height: "150px",
+                          width: "auto",
+                          objectFit: "contain",
+                        }}
+                      />
+                    </div>
+                  </div>
                   <div className="card-header">
                     {" "}
                     Invoice <strong>{utc}</strong>{" "}
@@ -54,7 +69,7 @@ const OrderDetailsScreenforPrint = ({ match, history, setHasVariant }) => {
                         ""
                       )}
                       {ordersDetails && ordersDetails.payment_status === 1 ? (
-                        <Badge variant="success">confirmed</Badge>
+                        <Badge variant="success">Ready For Shipment</Badge>
                       ) : (
                         ""
                       )}
@@ -64,7 +79,7 @@ const OrderDetailsScreenforPrint = ({ match, history, setHasVariant }) => {
                         ""
                       )}
                       {ordersDetails.payment_status === 3 ? (
-                        <Badge variant="danger">rejected</Badge>
+                        <Badge variant="danger">Cancelled</Badge>
                       ) : (
                         ""
                       )}
@@ -82,7 +97,6 @@ const OrderDetailsScreenforPrint = ({ match, history, setHasVariant }) => {
                   </div>
                   <div className="card-body">
                     <div className="row">
-                      
                       <div className="col-xl-3 col-sm-6 mb-4">
                         <h6>From:</h6>
                         <div>
@@ -108,24 +122,6 @@ const OrderDetailsScreenforPrint = ({ match, history, setHasVariant }) => {
                         <div>{ordersDetails.address}</div>
                         <div>{ordersDetails.phone}</div>
                       </div>
-                      {/*<div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4 d-flex justify-content-lg-end justify-content-md-center justify-content-xs-start">
-                      <div className="row align-items-center">
-                        <div className="col-sm-9">
-                          <div className="brand-logo mb-3">
-                            <img
-                              className="logo-abbr mr-2 img-fluid"
-                              src={Logo}
-                              alt=""
-                              style={{
-                                height: "200px",
-                                width: "auto",
-                                objectFit: "contain",
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                            </div>*/}
                     </div>
                     <div className="table-responsive">
                       <table className="table table-striped">
@@ -207,4 +203,4 @@ const OrderDetailsScreenforPrint = ({ match, history, setHasVariant }) => {
   );
 };
 
-export default OrderDetailsScreenforPrint;
+export default OrderDetailsScreen;

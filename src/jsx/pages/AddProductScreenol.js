@@ -266,7 +266,7 @@ const AddProductScreen = ({ history, match }) => {
       <>
         <Row>
           <Col className="col-md-6">
-            <TextField label="Price" name="price" type="number" min="0" />
+            <TextField label="Price" name="price" type="number" />
           </Col>
           <Col className="col-md-6">
             <TextField label="Stock" name="stocks" type="number" />
@@ -275,12 +275,7 @@ const AddProductScreen = ({ history, match }) => {
         {offer.checked ? (
           <Row>
             <Col className="col-md-12">
-              <TextField
-                label="Offer Price"
-                name="offerprice"
-                type="number"
-                min="0"
-              />
+              <TextField label="Offer Price" name="offerprice" type="number" />
             </Col>
           </Row>
         ) : (
@@ -526,9 +521,7 @@ const AddProductScreen = ({ history, match }) => {
   }, [dispatch, productId, product]);
 
   useLayoutEffect(() => {
-    if (!productId) {
-      checkPermission(history, "product.add");
-    }
+    checkPermission(history, "product.add");
 
     if (productId) {
       dispatch(listProductDetails(productId));
@@ -792,12 +785,7 @@ const AddProductScreen = ({ history, match }) => {
             innerRef={submitform}
             validationSchema={validate()}
             onSubmit={(values, { resetForm }) => {
-              if (productId) {
-                if (!userinfo.user.permissions.includes("product.update")) {
-                  history.push("/error");
-                  return;
-                }
-              } else if (!userinfo.user.permissions.includes("product.add")) {
+              if (!userinfo.user.permissions.includes("product.update")) {
                 history.push("/error");
                 return;
               }
@@ -923,6 +911,10 @@ const AddProductScreen = ({ history, match }) => {
                               ? (d = false)
                               : (d = true);
                             setHasVariant({ checked: d });
+                            if (d) {
+                              setShow(true);
+                              setHasSize({checked:true})
+                            }
                           }}
                         />
 
@@ -998,7 +990,7 @@ const AddProductScreen = ({ history, match }) => {
                           e.preventDefault();
                           checkPermission(history, "variation.add");
                           if (ProductVariationList.length === 0) {
-                            setShowOptions(true);
+                            setShow(true);
                           } else {
                             setShowOptions(false);
                             setShow(true);

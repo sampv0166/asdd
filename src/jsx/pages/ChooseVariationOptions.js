@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Modal } from 'react-bootstrap';
-import VariationOptions from './VariationOptions';
+import React, { useState } from "react";
+import { Modal } from "react-bootstrap";
+import VariationOptions from "./VariationOptions";
 
 const ChooseVariationOptions = ({
   showOptions,
@@ -26,9 +26,7 @@ const ChooseVariationOptions = ({
                 setHasColor({ checked: d });
               }}
             />
-            <label class="form-check-label" >
-              Color variant
-            </label>
+            <label class="form-check-label">Color variant</label>
           </div>
         </div>
 
@@ -44,9 +42,7 @@ const ChooseVariationOptions = ({
                 setHasSize({ checked: d });
               }}
             />
-            <label class="form-check-label" >
-              Size variant
-            </label>
+            <label class="form-check-label">Size variant</label>
           </div>
         </div>
       </div>
@@ -54,8 +50,12 @@ const ChooseVariationOptions = ({
       <button
         className="btn btn-primary "
         onClick={() => {
-          setShow(true);
-          setShowOptions(false);
+          if (hasColor.checked || hasSize.checked) {
+            setShow(true);
+            setShowOptions(false);
+          } else {
+            window.alert("select atleast one variant");
+          }
         }}
       >
         Ok

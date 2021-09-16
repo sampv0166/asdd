@@ -57,6 +57,7 @@ const Settings = ({ history }) => {
                         label="UAE DELIVERY CHARGE"
                         name="uae_delivery"
                         type="number"
+                        min="0"
                       />
                     </div>
                     <div className="col-md-4">

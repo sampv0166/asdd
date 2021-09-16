@@ -240,6 +240,8 @@ const AddNewShopScreen = ({ match, history }) => {
             formdata.append("shop_trn", values.shop_trn);
             formdata.append("shop_mob", values.shop_mob);
             formdata.append("shop_website", values.shop_website);
+
+            
             values.open === true
               ? formdata.append("open", 1)
               : formdata.append("open", 0);
@@ -247,6 +249,7 @@ const AddNewShopScreen = ({ match, history }) => {
             values.isactive === true
               ? formdata.append("status", 1)
               : formdata.append("status", 0);
+
 
             if (prodAdd.checked) {
               formdata.append("add_permission[]", "product.add");
@@ -504,12 +507,11 @@ const AddNewShopScreen = ({ match, history }) => {
                           label="Shop Mob"
                           name="shop_mob"
                           type="text"
-                          value = '+971'
                         />
                       </div>
                     </div>
                     <Row>
-                      {/*<Col className="col-3">
+                      <Col className="col-3">
                         <div class="form-check form-switch">
                           <input
                             class="form-check-input"
@@ -531,8 +533,7 @@ const AddNewShopScreen = ({ match, history }) => {
                             Active
                           </label>
                         </div>
-                          </Col>*/}
-
+                      </Col>
                       {
                         <Col className="col-3">
                           <div class="form-check form-switch">

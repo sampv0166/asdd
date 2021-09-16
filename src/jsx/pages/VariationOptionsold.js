@@ -37,6 +37,8 @@ const VariationOptions = ({
   const [deleteimageurl, setDeletedimageurl] = useState([]);
   const [blobImages, setBlobImages] = useState([]);
 
+  const [colors, setColors] = useState([]);
+
   const productDetails = useSelector((state) => state.productDetails);
   const {
     product,
@@ -57,7 +59,7 @@ const VariationOptions = ({
         const filesArray = Array.from(e.target.files).map((file) =>
           URL.createObjectURL(file)
         );
-        console.log(filesArray);
+
         setSelectedFiles((prevImages) => prevImages.concat(filesArray));
 
         Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
@@ -168,7 +170,6 @@ const VariationOptions = ({
 
   const addToVariationList = (formik) => {
     formik.setFieldValue("blobImage", blobImages);
-
     setProductVariationList((prev) => [...prev, formik.values]);
     formik.setFieldValue("price", "");
     formik.setFieldValue("offerprice", "");
@@ -180,6 +181,15 @@ const VariationOptions = ({
     setFormikFileArray([]);
     setSelectedFiles([]);
     formik.setFieldValue("images", []);
+  };
+
+  
+  const addToColorsList = (formik) => {
+    setColors((prev) => [...prev, formik.values]);
+    formik.setFieldValue("offerprice", "");
+    formik.setFieldValue("color_name", "");
+    formik.setFieldValue("color_value", "");
+    formik.setFieldValue("hasoffer", "");
   };
 
   const handleSaveVariation = (formik) => {
@@ -327,6 +337,17 @@ const VariationOptions = ({
                     </div>
                   </div>
                 </div>
+                <div className="row g-3">
+                  <div className="col-md-6">
+                    {hasSize.checked ? (
+                      <div className="">
+                        <TextField label="Size" name="size_value" type="text" />
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
 
                 <div className="my-4">
                   <div className="row g-3">
@@ -336,17 +357,68 @@ const VariationOptions = ({
                         label="Price"
                         name="price"
                         type="number"
-                        min="0"
                       />
                     </div>
                     <div className="col-md-6">
                       <TextField label="Stock" name="stocks" type="number" />
                     </div>
                   </div>
+                </div>
 
-                  <div className="row g-3">
+                <div className="row g-3 mb-2">
+                  <div className="col">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="flexSwitchCheckDefault"
+                        checked={hasColor.checked}
+                        onChange={(d) => {
+                          hasColor.checked === true ? (d = false) : (d = true);
+                          setHasColor({ checked: d });
+                        }}
+                      />
+                      <label class="form-check-label">Has Colors</label>
+                    </div>
+                  </div>
+                </div>
+
+                {hasColor.checked ? (
+                  <div className="row g-3 mx-1">
                     <div className="col-md-6">
-                      <div class="form-check form-switch">
+                      <SketchPicker
+                        color={color}
+                        onChange={(updatedColor) => {
+                          setColor(updatedColor.hex);
+                          formik.setFieldValue("color_value", updatedColor.hex);
+                        }}
+                        width="300px"
+                        height="50px"
+                      />
+                    </div>
+
+                    <div className="col-md-6">
+                      {/*<div>
+                        <label>Selected color</label>
+                      </div>
+                      <div
+                        className="dot mx-2"
+                        style={{ backgroundColor: `${color}` }}
+                      ></div>*/}
+                      <div className="my-2">
+                        {hasColor.checked ? (
+                          <div className="">
+                            <TextField
+                              label="Color Name"
+                              name="color_name"
+                              type="text"
+                            />
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      <div class="form-check form-switch my-2">
                         <input
                           class="form-check-input"
                           type="checkbox"
@@ -367,62 +439,37 @@ const VariationOptions = ({
 
                         <label class="form-check-label">Has Offer</label>
                       </div>
-                    </div>
-                    {hasOffer.checked ? (
-                      <div className="col-md-6">
-                        <TextField
-                          label="Offer Price"
-                          name="offerprice"
-                          type="number"
-                          min="0"
-                        />
+                      {hasOffer.checked ? (
+                        <div className="">
+                          <TextField
+                            label="Offer Price"
+                            name="offerprice"
+                            type="number"
+                          />
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      <div className="d-flex justify-content-end my-2 w-100">
+                        <button
+                          className="btn btn-success"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            addToColorsList(formik);
+                          }}
+                        >
+                          Save
+                        </button>
                       </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-
-                <div className="row g-3 mx-1">
-                  {hasColor.checked ? (
-                    <div className="col-md-6">
-                      <TextField
-                        label="Color Name"
-                        name="color_name"
-                        type="text"
-                      />
-                    </div>
-                  ) : (
-                    ""
-                  )}
-
-                  {hasSize.checked ? (
-                    <div className="col-md-6">
-                      <TextField label="Size" name="size_value" type="text" />
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
-                {hasColor.checked ? (
-                  <div className="row g-3 mx-1">
-                    <div className="col-md-6">
-                      <SketchPicker
-                        color={color}
-                        onChange={(updatedColor) => {
-                          setColor(updatedColor.hex);
-                          formik.setFieldValue("color_value", updatedColor.hex);
-                        }}
-                        width="300px"
-                        height="50px"
-                      />
-                    </div>
-
-                    <div className="col-md-6">
-                      <input
-                        className={`form-control shadow-none rounded`}
-                        style={{ backgroundColor: `${color}` }}
-                      ></input>
+                      <div>
+                        <label>Addes colors</label>
+                      </div>
+                      {colors.map((item, i) => (
+                        <div
+                          className="dot mx-1"
+                          style={{ backgroundColor: `${item.color_value}` }}
+                        ></div>
+                      ))}
                     </div>
                   </div>
                 ) : (
@@ -446,8 +493,8 @@ const VariationOptions = ({
               {showAlert ? (
                 selectedFiles.length === 0 ? (
                   <Alert variant="danger">image required</Alert>
-                ) : formik.values.price === "" || formik.values.price < 0 ? (
-                  <Alert variant="danger">price not valid</Alert>
+                ) : formik.values.price === "" ? (
+                  <Alert variant="danger">price required</Alert>
                 ) : formik.values.stocks === "" ? (
                   <Alert variant="danger">stock is required</Alert>
                 ) : formik.values.color_name !== "" &&
@@ -459,10 +506,9 @@ const VariationOptions = ({
                 ) : hasSize.checked === true &&
                   formik.values.size_value === "" ? (
                   <Alert variant="danger">size is required</Alert>
-                ) : (hasOffer.checked === true &&
-                    formik.values.offerprice === "") ||
-                  formik.values.offerprice < 0 ? (
-                  <Alert variant="danger">offer price not valid</Alert>
+                ) : hasOffer.checked === true &&
+                  formik.values.offerprice === "" ? (
+                  <Alert variant="danger">offer price required</Alert>
                 ) : (
                   ""
                 )

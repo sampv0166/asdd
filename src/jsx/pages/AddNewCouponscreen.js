@@ -167,15 +167,20 @@ const AddNewCouponscreen = ({ history, match }) => {
         setCoupon(item);
         if (item.product_ids !== null) {
           PopulateProductIds(item.product_ids);
-          setSelectedShopOption({
-            value: item.shop_id,
-            label: item.shop.shop_name_en,
-          });
+          if (item.shop_id !== null) {
+            setSelectedShopOption({
+              value: item.shop_id,
+              label: item.shop.shop_name_en,
+            });
+          }
         } else {
-          setSelectedShopOption({
-            value: item.shop_id,
-            label: item.shop.shop_name_en,
-          });
+          console.log(item);
+          if (item.shop_id !== null) {
+            setSelectedShopOption({
+              value: item.shop_id,
+              label: item.shop.shop_name_en,
+            });
+          }
         }
       }
     });
@@ -198,7 +203,7 @@ const AddNewCouponscreen = ({ history, match }) => {
 
   return (
     <>
-      {l || loadingcreate || productloading ? (
+      {loadingcreate || productloading ? (
         <Loader />
       ) : couponsError || errorcreate || producterror ? (
         <Message variant="danger">
@@ -214,18 +219,12 @@ const AddNewCouponscreen = ({ history, match }) => {
             value: coupon.value || "",
             expiry: coupon.expired_at || "",
             expire: coupon.expired_at || "",
+            ispercentage: coupon.ispercentage || false,
             shop_id: "",
             product_id: [],
           }}
           validationSchema={validate}
           onSubmit={(values) => {
-            /*if (categoryId) {
-              if (checkPermissionOnSubmit("category.update")) {
-                history.push("/error");
-                return;
-              }
-            }*/
-
             let formdata = new FormData();
 
             if (couponId) {
@@ -291,12 +290,43 @@ const AddNewCouponscreen = ({ history, match }) => {
             <Form>
               <div>
                 <div className="row g-3">
-                  <div className="col-6">
-                    <TextField label="Code" name="code" type="text" />
+                  <div className="col-4">
+                    <TextField label="Coupon Code" name="code" type="text" />
                   </div>
-                  <div className="col-6">
-                    <TextField label="Value" name="value" type="number" />
+                  <div className="col-4">
+                    <TextField
+                      label="Coupon Value"
+                      name="value"
+                      type="number"
+                      min = '0'
+                    />
                   </div>
+
+                  <div className="col-4 my-3">
+                    <div class="form-check form-switch my-3">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="flexSwitchCheckDefault"
+                        checked={percentage.checked}
+                        onChange={(d) => {
+                          percentage.checked === true
+                            ? (d = false)
+                            : (d = true);
+                          setIsPercentage({ checked: d });
+                          formik.setFieldValue("ispercentage", d);
+                        }}
+                      />
+
+                      <label
+                        class="form-check-label"
+                        for="flexSwitchCheckDefault"
+                      >
+                        Is percentage
+                      </label>
+                    </div>
+                  </div>
+
                   <div className="col-6">
                     <TextField
                       label="Descritpion English"
@@ -333,6 +363,7 @@ const AddNewCouponscreen = ({ history, match }) => {
                         setSelectedOption(e);
                         formik.setFieldValue("product_id", e);
                         console.log(e);
+                        setSelectedShopOption(null);
                       }}
                     />
                   </div>
@@ -356,6 +387,7 @@ const AddNewCouponscreen = ({ history, match }) => {
                         isClearable
                         onChange={(e) => {
                           setSelectedShopOption(e);
+                          setSelectedOption(null);
                           formik.setFieldValue("shop_id", e);
                           console.log(e);
                         }}
@@ -383,29 +415,6 @@ const AddNewCouponscreen = ({ history, match }) => {
                         formik.setFieldValue("expiry", e.target.value);
                       }}
                     />
-                  </div>
-                </div>
-
-                <div className="col-6">
-                  <div class="form-check form-switch my-3">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="flexSwitchCheckDefault"
-                      checked={percentage.checked}
-                      onChange={(d) => {
-                        percentage.checked === true ? (d = false) : (d = true);
-                        setIsPercentage({ checked: d });
-                        formik.setFieldValue("ispercentage", d);
-                      }}
-                    />
-
-                    <label
-                      class="form-check-label"
-                      for="flexSwitchCheckDefault"
-                    >
-                      Is percentage
-                    </label>
                   </div>
                 </div>
 

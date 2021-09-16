@@ -60,6 +60,7 @@ export const getSlider =
     }
   };
 
+  
 export const listSliderDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: SLIDER_DETAILS_REQUEST });
