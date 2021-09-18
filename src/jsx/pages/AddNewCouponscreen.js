@@ -291,7 +291,7 @@ const AddNewCouponscreen = ({ history, match }) => {
               <div>
                 <div className="row g-3">
                   <div className="col-4">
-                    <TextField label="Coupon Code" name="code" type="text" />
+                    <TextField label="Coupon Code" name="code" type="text"    pattern=".*\S+.*" />
                   </div>
                   <div className="col-4">
                     <TextField
@@ -332,6 +332,7 @@ const AddNewCouponscreen = ({ history, match }) => {
                       label="Descritpion English"
                       name="description_en"
                       type="text"
+                      pattern=".*\S+.*"
                     />
                   </div>
                   <div className="col-6">
@@ -339,6 +340,7 @@ const AddNewCouponscreen = ({ history, match }) => {
                       label="Descritpion Arabic"
                       name="description_ar"
                       type="text"
+                      pattern=".*\S+.*"
                     />
                   </div>
                 </div>

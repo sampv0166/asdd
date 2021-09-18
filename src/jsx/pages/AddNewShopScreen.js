@@ -1,19 +1,19 @@
-import { ErrorMessage, Form, Formik } from "formik";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Card, Col, Image, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { ErrorMessage, Form, Formik } from 'formik';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { Card, Col, Image, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   createShop,
   listShopDetails,
   listShops,
-} from "../../actions/shopActions";
-import * as Yup from "yup";
-import TextField from "../components/TextField";
-import Loader from "../components/Loader";
-import Message from "../components/Message";
+} from '../../actions/shopActions';
+import * as Yup from 'yup';
+import TextField from '../components/TextField';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 
-import CheckboxGroup from "../components/CheckboxGroup";
-import checkPermission, { checkPermissionOnSubmit } from "./checkpermission";
+import CheckboxGroup from '../components/CheckboxGroup';
+import checkPermission, { checkPermissionOnSubmit } from './checkpermission';
 const AddNewShopScreen = ({ match, history }) => {
   const [prodAdd, setProdadd] = useState({ checked: false });
   const [prodUpdate, setProdUpdate] = useState({ checked: false });
@@ -50,9 +50,9 @@ const AddNewShopScreen = ({ match, history }) => {
   const [active, setActive] = useState({ checked: false });
 
   const [permissions, setPermissions] = useState([
-    { key: "add", value: "add" },
-    { key: "update", value: "update" },
-    { key: "delete", value: "delete" },
+    { key: 'add', value: 'add' },
+    { key: 'update', value: 'update' },
+    { key: 'delete', value: 'delete' },
   ]);
 
   const shopId = match.params.id;
@@ -75,7 +75,7 @@ const AddNewShopScreen = ({ match, history }) => {
       URL.revokeObjectURL(e.target.files);
     }
 
-    formik.setFieldValue("image", e.currentTarget.files[0]);
+    formik.setFieldValue('image', e.currentTarget.files[0]);
   };
 
   const handleBannerImageChange = (e, formik) => {
@@ -85,7 +85,7 @@ const AddNewShopScreen = ({ match, history }) => {
       URL.revokeObjectURL(e.target.files);
     }
 
-    formik.setFieldValue("bannerimage", e.currentTarget.files[0]);
+    formik.setFieldValue('bannerimage', e.currentTarget.files[0]);
   };
 
   useEffect(() => {
@@ -111,31 +111,31 @@ const AddNewShopScreen = ({ match, history }) => {
   }, [dispatch, shopId]);
 
   const validate = Yup.object({
-    shop_name_en: Yup.string().required("Required"),
-    email: Yup.string().email("Email is invalid").required("Email is required"),
+    shop_name_en: Yup.string().required('Required'),
+    email: Yup.string().email('Email is invalid').required('Email is required'),
     image:
-      Yup.mixed().required("required") || Yup.string().required("required"),
-    password: Yup.string().required("Required"),
+      Yup.mixed().required('required') || Yup.string().required('required'),
+    password: Yup.string().required('Required'),
     shop_trn: Yup.string(),
     shop_mob: Yup.string(),
     shop_website: Yup.string().matches(
       /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-      "Enter correct url!"
+      'Enter correct url!'
     ),
     bannerimage:
-      Yup.mixed().required("required") || Yup.string().required("required"),
+      Yup.mixed().required('required') || Yup.string().required('required'),
   });
 
   const validateWithoutPassword = Yup.object({
-    shop_name_en: Yup.string().required("Required"),
-    email: Yup.string().email("Email is invalid").required("Email is required"),
+    shop_name_en: Yup.string().required('Required'),
+    email: Yup.string().email('Email is invalid').required('Email is required'),
     image:
-      Yup.mixed().required("required") || Yup.string().required("required"),
+      Yup.mixed().required('required') || Yup.string().required('required'),
     shop_trn: Yup.string(),
     shop_mob: Yup.string(),
     shop_website: Yup.string(),
     bannerimage:
-      Yup.mixed().required("required") || Yup.string().required("required"),
+      Yup.mixed().required('required') || Yup.string().required('required'),
   });
 
   const validateform = () => {
@@ -145,11 +145,11 @@ const AddNewShopScreen = ({ match, history }) => {
       return validate;
     }
   };
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const handleSubmit = async (formdata) => {
     dispatch(createShop(dispatch, formdata));
 
-    if (userInfo.user.typeofuser === "S") {
+    if (userInfo.user.typeofuser === 'S') {
       dispatch(listShops(1));
     }
     history.goBack();
@@ -167,17 +167,17 @@ const AddNewShopScreen = ({ match, history }) => {
         <Formik
           enableReinitialize
           initialValues={{
-            shop_name_en: (shop && shop.shop_name_en) || "",
-            email: (shop && shop.shop_email) || "",
-            image: (shop && shop.coverimage) || "",
-            bannerimage: (shop && shop.bannerimage) || "",
-            password: "",
-            shop_trn: (shop && shop.shop_trn) || "",
-            shop_mob: (shop && shop.shop_mob) || "",
-            shop_website: (shop && shop.shop_website) || "",
-            open: (shop && shop.open) || "",
-            isactive: (shop && shop.false) || "",
-            name: (shop && shop.name) || "",
+            shop_name_en: (shop && shop.shop_name_en) || '',
+            email: (shop && shop.shop_email) || '',
+            image: (shop && shop.coverimage) || '',
+            bannerimage: (shop && shop.bannerimage) || '',
+            password: '',
+            shop_trn: (shop && shop.shop_trn) || '',
+            shop_mob: (shop && shop.shop_mob) || '',
+            shop_website: (shop && shop.shop_website) || '',
+            open: (shop && shop.open) || '',
+            isactive: (shop && shop.false) || '',
+            name: (shop && shop.name) || '',
 
             prodadd: false,
             produpdate: false,
@@ -209,130 +209,128 @@ const AddNewShopScreen = ({ match, history }) => {
           }}
           validationSchema={validateform}
           onSubmit={(values) => {
-            if (checkPermissionOnSubmit("shop.update")) {
-              history.push("/error");
+            if (checkPermissionOnSubmit('shop.update')) {
+              history.push('/error');
               return;
             }
 
             let formdata = new FormData();
 
             if (shopId) {
-              formdata.append("id", shopId);
+              formdata.append('id', shopId);
             }
 
-            formdata.append("shop_name_en", values.shop_name_en);
-            formdata.append("shop_name_ar", values.shop_name_en);
-            formdata.append("name_en", values.shop_name_en);
-            formdata.append("email", values.email);
-            if (typeof values.image === "string") {
-              formdata.delete("image");
+            formdata.append('shop_name_en', values.shop_name_en);
+            formdata.append('shop_name_ar', values.shop_name_en);
+            formdata.append('name_en', values.shop_name_en);
+            formdata.append('email', values.email);
+            if (typeof values.image === 'string') {
+              formdata.delete('image');
             } else {
-              formdata.append("image", values.image);
+              formdata.append('image', values.image);
             }
 
-            if (typeof values.bannerimage === "string") {
-              formdata.delete("banner");
+            if (typeof values.bannerimage === 'string') {
+              formdata.delete('banner');
             } else {
-              formdata.append("banner", values.bannerimage);
+              formdata.append('banner', values.bannerimage);
             }
 
-            formdata.append("password", values.password);
-            formdata.append("shop_trn", values.shop_trn);
-            formdata.append("shop_mob", values.shop_mob);
-            formdata.append("shop_website", values.shop_website);
+            formdata.append('password', values.password);
+            formdata.append('shop_trn', values.shop_trn);
+            formdata.append('shop_mob', values.shop_mob);
+            formdata.append('shop_website', values.shop_website);
 
-            
             values.open === true
-              ? formdata.append("open", 1)
-              : formdata.append("open", 0);
+              ? formdata.append('open', 1)
+              : formdata.append('open', 0);
 
             values.isactive === true
-              ? formdata.append("status", 1)
-              : formdata.append("status", 0);
-
+              ? formdata.append('status', 1)
+              : formdata.append('status', 0);
 
             if (prodAdd.checked) {
-              formdata.append("add_permission[]", "product.add");
+              formdata.append('add_permission[]', 'product.add');
             }
 
             if (prodUpdate.checked) {
-              formdata.append("add_permission[]", "product.update");
+              formdata.append('add_permission[]', 'product.update');
             }
 
             if (prodDelete.checked) {
-              formdata.append("add_permission[]", "product.delete");
+              formdata.append('add_permission[]', 'product.delete');
             }
 
             if (shopAdd.checked) {
-              formdata.append("add_permission[]", "shop.add");
+              formdata.append('add_permission[]', 'shop.add');
             }
 
             if (shopUpdate.checked) {
-              formdata.append("add_permission[]", "shop.update");
+              formdata.append('add_permission[]', 'shop.update');
             }
 
             if (shopDelete.checked) {
-              formdata.append("add_permission[]", "shop.delete");
+              formdata.append('add_permission[]', 'shop.delete');
             }
 
             if (CategoryAdd.checked) {
-              formdata.append("add_permission[]", "category.add");
+              formdata.append('add_permission[]', 'category.add');
             }
 
             if (categoryUpdate.checked) {
-              formdata.append("add_permission[]", "category.update");
+              formdata.append('add_permission[]', 'category.update');
             }
 
             if (categoryDelete.checked) {
-              formdata.append("add_permission[]", "category.delete");
+              formdata.append('add_permission[]', 'category.delete');
             }
 
             if (variationAdd.checked) {
-              formdata.append("add_permission[]", "variation.add");
+              formdata.append('add_permission[]', 'variation.add');
             }
 
             if (variationUpdate.checked) {
-              formdata.append("add_permission[]", "variation.update");
+              formdata.append('add_permission[]', 'variation.update');
             }
 
             if (variationDelete.checked) {
-              formdata.append("add_permission[]", "variation.delete");
+              formdata.append('add_permission[]', 'variation.delete');
             }
 
             if (ordersAdd.checked) {
-              formdata.append("add_permission[]", "orders.add");
+              formdata.append('add_permission[]', 'orders.add');
             }
 
             if (ordersUpdate.checked) {
-              formdata.append("add_permission[]", "orders.update");
+              formdata.append('add_permission[]', 'orders.update');
             }
 
             if (ordersDelete.checked) {
-              formdata.append("add_permission[]", "orders.delete");
+              formdata.append('add_permission[]', 'orders.delete');
             }
 
             if (usersAdd.checked) {
-              formdata.append("add_permission[]", "users.add");
+              formdata.append('add_permission[]', 'users.add');
             }
 
             if (usersUpdate.checked) {
-              formdata.append("add_permission[]", "users.update");
+              formdata.append('add_permission[]', 'users.update');
             }
 
             if (usersDelete.checked) {
-              formdata.append("add_permission[]", "users.delete");
+              formdata.append('add_permission[]', 'users.delete');
             }
 
             if (couponAdd.checked) {
-              formdata.append("add_permission[]", "coupon.add");
+              formdata.append('add_permission[]', 'coupon.add');
             }
 
             if (couponUpdate.checked) {
-              formdata.append("add_permission[]", "coupon.update");
+              formdata.append('add_permission[]', 'coupon.update');
             }
 
             if (couponDelete.checked) {
-              formdata.append("add_permission[]", "coupon.delete");
+              formdata.append('add_permission[]', 'coupon.delete');
             }
 
             handleSubmit(formdata);
@@ -345,10 +343,10 @@ const AddNewShopScreen = ({ match, history }) => {
                   <div>
                     <Card
                       className="my-2 p-1 rounded"
-                      style={{ height: "280px", objectFit: "cover" }}
+                      style={{ height: '280px', objectFit: 'cover' }}
                     >
                       <Card.Img
-                        style={{ height: "270px", objectFit: "contain" }}
+                        style={{ height: '270px', objectFit: 'contain' }}
                         src={shopBannerImage}
                         variant="top"
                       />
@@ -364,7 +362,7 @@ const AddNewShopScreen = ({ match, history }) => {
                         <ErrorMessage
                           component="div"
                           className="error text-danger"
-                          name={"bannerimage"}
+                          name={'bannerimage'}
                         />
                         <i className="bx bx-cloud-upload mx-2"></i>Upload Banner
                         Image
@@ -375,10 +373,10 @@ const AddNewShopScreen = ({ match, history }) => {
                   <div>
                     <Card
                       className="my-2 p-1 rounded"
-                      style={{ height: "280px", objectFit: "cover" }}
+                      style={{ height: '280px', objectFit: 'cover' }}
                     >
                       <Card.Img
-                        style={{ height: "270px", objectFit: "contain" }}
+                        style={{ height: '270px', objectFit: 'contain' }}
                         src={shopBannerImage}
                         variant="top"
                       />
@@ -394,7 +392,7 @@ const AddNewShopScreen = ({ match, history }) => {
                         <ErrorMessage
                           component="div"
                           className="error text-danger"
-                          name={"bannerimage"}
+                          name={'bannerimage'}
                         />
                         <i className="bx bx-cloud-upload mx-2"></i>Upload Banner
                         Image
@@ -409,7 +407,7 @@ const AddNewShopScreen = ({ match, history }) => {
                         <div className="d-flex justify-content-center">
                           <Image
                             src={shopCoverImage}
-                            style={{ height: "270px", objectFit: "contain" }}
+                            style={{ height: '270px', objectFit: 'contain' }}
                             roundedCircle
                           />
                         </div>
@@ -423,7 +421,7 @@ const AddNewShopScreen = ({ match, history }) => {
                             <ErrorMessage
                               component="div"
                               className="error text-danger"
-                              name={"image"}
+                              name={'image'}
                             />
                             <i className="bx bx-cloud-upload mx-2"></i>Upload
                             Cover Image
@@ -435,7 +433,7 @@ const AddNewShopScreen = ({ match, history }) => {
                         <div className="d-flex justify-content-center">
                           <Image
                             src={shopCoverImage}
-                            style={{ height: "270px", objectFit: "contain" }}
+                            style={{ height: '270px', objectFit: 'contain' }}
                             roundedCircle
                           />
                         </div>
@@ -450,7 +448,7 @@ const AddNewShopScreen = ({ match, history }) => {
                             <ErrorMessage
                               component="div"
                               className="error text-danger"
-                              name={"image"}
+                              name={'image'}
                             />
                             <i className="bx bx-cloud-upload mx-2"></i>Upload
                             Cover Image
@@ -466,16 +464,18 @@ const AddNewShopScreen = ({ match, history }) => {
                           label="English Name"
                           name="shop_name_en"
                           type="text"
+                          pattern=".*\S+.*"
                         />
                       </div>
                       {shopId ? (
-                        ""
+                        ''
                       ) : (
                         <div className="col-md-6">
                           <TextField
                             label="Password"
                             name="password"
                             type="password"
+                            pattern=".*\S+.*"
                           />
                         </div>
                       )}
@@ -487,11 +487,17 @@ const AddNewShopScreen = ({ match, history }) => {
                           label="Shop TRN"
                           name="shop_trn"
                           type="text"
+                          pattern=".*\S+.*"
                         />
                       </div>
 
                       <Col>
-                        <TextField label="Email" name="email" type="text" />
+                        <TextField
+                          label="Email"
+                          name="email"
+                          type="text"
+                          pattern=".*\S+.*"
+                        />
                       </Col>
                     </div>
                     <div className="row g-3">
@@ -500,6 +506,7 @@ const AddNewShopScreen = ({ match, history }) => {
                           label="Shop Website"
                           name="shop_website"
                           type="text"
+                          pattern=".*\S+.*"
                         />
                       </Col>
                       <div className="col-md-6">
@@ -507,6 +514,7 @@ const AddNewShopScreen = ({ match, history }) => {
                           label="Shop Mob"
                           name="shop_mob"
                           type="text"
+                          pattern=".*\S+.*"
                         />
                       </div>
                     </div>
@@ -523,7 +531,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setActive({ checked: d });
-                              formik.setFieldValue("isactive", d);
+                              formik.setFieldValue('isactive', d);
                             }}
                           />
                           <label
@@ -547,7 +555,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                   ? (d = false)
                                   : (d = true);
                                 setopen({ checked: d });
-                                formik.setFieldValue("open", d);
+                                formik.setFieldValue('open', d);
                               }}
                             />
                             <label
@@ -561,7 +569,7 @@ const AddNewShopScreen = ({ match, history }) => {
                       }
                     </Row>
                   </div>
-                  {userInfo.user.typeofuser === "S" && !shopId ? (
+                  {userInfo.user.typeofuser === 'S' && !shopId ? (
                     <Row className="container-fluid">
                       <Col className="col-md-3 my-4">
                         Product Permissions
@@ -576,7 +584,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setProdadd({ checked: d });
-                              formik.setFieldValue("prodadd", d);
+                              formik.setFieldValue('prodadd', d);
                             }}
                           />
                           <label className="form-check-label">Add</label>
@@ -592,7 +600,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setProdUpdate({ checked: d });
-                              formik.setFieldValue("produpdate", d);
+                              formik.setFieldValue('produpdate', d);
                             }}
                           />
                           <label className="form-check-label">Update</label>
@@ -608,7 +616,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setProdDelete({ checked: d });
-                              formik.setFieldValue("proddelete", d);
+                              formik.setFieldValue('proddelete', d);
                             }}
                           />
                           <label className="form-check-label">Delete</label>
@@ -628,7 +636,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setshopadd({ checked: d });
-                              formik.setFieldValue("shopadd", d);
+                              formik.setFieldValue('shopadd', d);
                             }}
                           />
                           <label className="form-check-label">Add</label>
@@ -644,7 +652,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setshopUpdate({ checked: d });
-                              formik.setFieldValue("shopupdate", d);
+                              formik.setFieldValue('shopupdate', d);
                             }}
                           />
                           <label className="form-check-label">Update</label>
@@ -660,7 +668,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setshopDelete({ checked: d });
-                              formik.setFieldValue("shopdelete", d);
+                              formik.setFieldValue('shopdelete', d);
                             }}
                           />
                           <label className="form-check-label">Delete</label>
@@ -680,7 +688,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setCategoryAdd({ checked: d });
-                              formik.setFieldValue("categoryadd", d);
+                              formik.setFieldValue('categoryadd', d);
                             }}
                           />
                           <label className="form-check-label">Add</label>
@@ -696,7 +704,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setcategoryUpdate({ checked: d });
-                              formik.setFieldValue("categoryupdate", d);
+                              formik.setFieldValue('categoryupdate', d);
                             }}
                           />
                           <label className="form-check-label">Update</label>
@@ -712,7 +720,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setcategoryDelete({ checked: d });
-                              formik.setFieldValue("categoryDelete", d);
+                              formik.setFieldValue('categoryDelete', d);
                             }}
                           />
                           <label className="form-check-label">Delete</label>
@@ -732,7 +740,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setvariationAdd({ checked: d });
-                              formik.setFieldValue("variationAdd", d);
+                              formik.setFieldValue('variationAdd', d);
                             }}
                           />
                           <label className="form-check-label">Add</label>
@@ -748,7 +756,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setvariationUpdate({ checked: d });
-                              formik.setFieldValue("variationUpdate", d);
+                              formik.setFieldValue('variationUpdate', d);
                             }}
                           />
                           <label className="form-check-label">Update</label>
@@ -764,7 +772,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setvariationDelete({ checked: d });
-                              formik.setFieldValue("variationDelete", d);
+                              formik.setFieldValue('variationDelete', d);
                             }}
                           />
                           <label className="form-check-label">Delete</label>
@@ -784,7 +792,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setordersAdd({ checked: d });
-                              formik.setFieldValue("ordersadd", d);
+                              formik.setFieldValue('ordersadd', d);
                             }}
                           />
                           <label className="form-check-label">Add</label>
@@ -800,7 +808,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setordersUpdate({ checked: d });
-                              formik.setFieldValue("ordersupdate", d);
+                              formik.setFieldValue('ordersupdate', d);
                             }}
                           />
                           <label className="form-check-label">Update</label>
@@ -816,7 +824,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setordersDelete({ checked: d });
-                              formik.setFieldValue("ordersdelete", d);
+                              formik.setFieldValue('ordersdelete', d);
                             }}
                           />
                           <label className="form-check-label">Delete</label>
@@ -836,7 +844,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setusersAdd({ checked: d });
-                              formik.setFieldValue("usersadd", d);
+                              formik.setFieldValue('usersadd', d);
                             }}
                           />
                           <label className="form-check-label">Add</label>
@@ -852,7 +860,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setusersUpdate({ checked: d });
-                              formik.setFieldValue("usersupdate", d);
+                              formik.setFieldValue('usersupdate', d);
                             }}
                           />
                           <label className="form-check-label">Update</label>
@@ -868,7 +876,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setusersDelete({ checked: d });
-                              formik.setFieldValue("usersdelete", d);
+                              formik.setFieldValue('usersdelete', d);
                             }}
                           />
                           <label className="form-check-label">Delete</label>
@@ -888,7 +896,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setcouponAdd({ checked: d });
-                              formik.setFieldValue("couponadd", d);
+                              formik.setFieldValue('couponadd', d);
                             }}
                           />
                           <label className="form-check-label">Add</label>
@@ -904,7 +912,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setcouponUpdate({ checked: d });
-                              formik.setFieldValue("couponupdate", d);
+                              formik.setFieldValue('couponupdate', d);
                             }}
                           />
                           <label className="form-check-label">Update</label>
@@ -920,7 +928,7 @@ const AddNewShopScreen = ({ match, history }) => {
                                 ? (d = false)
                                 : (d = true);
                               setcouponDelete({ checked: d });
-                              formik.setFieldValue("coupondelete", d);
+                              formik.setFieldValue('coupondelete', d);
                             }}
                           />
                           <label className="form-check-label">Delete</label>

@@ -62,6 +62,7 @@
       "react-dropzone-uploader": "^2.11.0",
       "react-filepond": "^7.1.1",
       "react-gradient-timepicker": "0.0.3",
+      "react-input-color": "^4.0.0",
       "react-input-colorpicker": "^1.0.13",
       "react-linear-gradient-picker": "^1.1.4",
       "react-multistep": "^5.1.0",

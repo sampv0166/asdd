@@ -521,10 +521,10 @@ const AddNewUserScreen = ({ match, history }) => {
                   <div className="col-md-6">
                     <div className="row g-3">
                       <div className="col-md-6">
-                        <TextField label="Name" name="name" type="text" />
+                        <TextField label="Name" name="name" type="text"    pattern=".*\S+.*"/>
                       </div>
                       <div className="col-md-6">
-                        <TextField label="email" name="email" type="text" />
+                        <TextField label="email" name="email" type="text"    pattern=".*\S+.*" />
                       </div>
                     </div>
                     <div className="row g-3">
@@ -533,6 +533,7 @@ const AddNewUserScreen = ({ match, history }) => {
                           label="Password"
                           name="password"
                           type="password"
+                          pattern=".*\S+.*"
                         />
                       </div>
                     </div>

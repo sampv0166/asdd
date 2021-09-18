@@ -1,30 +1,30 @@
-import React from "react";
-import { useLayoutEffect } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from 'react';
+import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   createCategory,
   getCategory,
   listCategoryDetails,
-} from "../../actions/categoryActions";
-import * as Yup from "yup";
-import Loader from "../components/Loader";
-import Message from "../components/Message";
-import { ErrorMessage, Form, Formik } from "formik";
-import { Alert, Card, Carousel, Col, Image, Modal, Row } from "react-bootstrap";
-import TextField from "../components/TextField";
-import checkPermission, { checkPermissionOnSubmit } from "./checkpermission";
+} from '../../actions/categoryActions';
+import * as Yup from 'yup';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+import { ErrorMessage, Form, Formik } from 'formik';
+import { Alert, Card, Carousel, Col, Image, Modal, Row } from 'react-bootstrap';
+import TextField from '../components/TextField';
+import checkPermission, { checkPermissionOnSubmit } from './checkpermission';
 import {
   createSlider,
   deleteSlider,
   getSlider,
   listSliderDetails,
-} from "../../actions/sliderActions";
-import { listProducts } from "../../actions/productActions";
-import Select from "react-select";
-import { getAllShops, listShops } from "../../actions/shopActions";
-import { isFile } from "@babel/types";
+} from '../../actions/sliderActions';
+import { listProducts } from '../../actions/productActions';
+import Select from 'react-select';
+import { getAllShops, listShops } from '../../actions/shopActions';
+import { isFile } from '@babel/types';
 
 const AddNewSliderScreen = ({ match, history }) => {
   const [sliderImage, setSliderImage] = useState([]);
@@ -32,7 +32,7 @@ const AddNewSliderScreen = ({ match, history }) => {
   const [bottom, setBottom] = useState({ checked: false });
 
   const [deleteimageurl, setDeletedimageurl] = useState([]);
-  const [show, setShow] = useState({ status: false, action: "add", value: 0 });
+  const [show, setShow] = useState({ status: false, action: 'add', value: 0 });
   const [shopid, setShopId] = useState(null);
   const [showalter, setshowalert] = useState(false);
   const [id, setId] = useState(0);
@@ -74,8 +74,8 @@ const AddNewSliderScreen = ({ match, history }) => {
 
   const deleteSliderHandler = async (id) => {
     let formdata = new FormData();
-    formdata.set("delete", id);
-    if (window.confirm("Are you sure")) {
+    formdata.set('delete', id);
+    if (window.confirm('Are you sure')) {
       dispatch(deleteSlider(id));
     }
   };
@@ -101,7 +101,7 @@ const AddNewSliderScreen = ({ match, history }) => {
       URL.revokeObjectURL(e.target.files);
     }
 
-    formik.setFieldValue("image", e.currentTarget.files[0]);
+    formik.setFieldValue('image', e.currentTarget.files[0]);
   };
 
   useEffect(() => {
@@ -121,11 +121,11 @@ const AddNewSliderScreen = ({ match, history }) => {
 
   const validate = Yup.object({
     location: Yup.string()
-      .min(1, "Name must be atleast one character")
-      .required("Required"),
-    aspectratio: Yup.number().required("Required"),
+      .min(1, 'Name must be atleast one character')
+      .required('Required'),
+    aspectratio: Yup.number().required('Required'),
     image:
-      Yup.mixed().required("required") || Yup.string().required("required"),
+      Yup.mixed().required('required') || Yup.string().required('required'),
   });
 
   const handleSubmit = async (formdata) => {
@@ -150,21 +150,21 @@ const AddNewSliderScreen = ({ match, history }) => {
           enableReinitialize
           initialValues={{
             location:
-              sliderType === "1"
+              sliderType === '1'
                 ? sliders.top && sliders.top[0].location
                 : sliders.bottom && sliders.bottom[0].location,
             aspectratio:
-              sliderType === "1"
+              sliderType === '1'
                 ? sliders.top && sliders.top[0].aspectratio
                 : sliders.bottom && sliders.bottom[0].aspectratio,
             image:
-              sliderType === "1"
+              sliderType === '1'
                 ? sliders.top && sliders.top[0].fullurl
                 : sliders.bottom && sliders.bottom[0].fullurl,
-            shop_id: "1"
+            shop_id: '1'
               ? sliders.top && sliders.top[0].shop_id
               : sliders.bottom && sliders.bottom[0].shop_id,
-            product_id: "1"
+            product_id: '1'
               ? sliders.top && sliders.top[0].pid
               : sliders.bottom && sliders.bottom[0].pid,
           }}
@@ -178,14 +178,14 @@ const AddNewSliderScreen = ({ match, history }) => {
             }*/
             let formdata = new FormData();
             if (id !== 0) {
-              formdata.append("id", id);
+              formdata.append('id', id);
             }
-            formdata.append("location", values.location);
-            formdata.append("aspectratio", values.aspectratio);
-            if (typeof values.image === "string") {
-              formdata.delete("file");
+            formdata.append('location', values.location);
+            formdata.append('aspectratio', values.aspectratio);
+            if (typeof values.image === 'string') {
+              formdata.delete('file');
             } else {
-              formdata.append("file", values.image);
+              formdata.append('file', values.image);
             }
 
             /* if (selectedProductOption !== null && showProduct) {
@@ -194,8 +194,8 @@ const AddNewSliderScreen = ({ match, history }) => {
             }*/
 
             if (selectedOption !== null && showShop) {
-              formdata.append("shop_id", Number(values.shop_id));
-              formdata.append("pid", "");
+              formdata.append('shop_id', Number(values.shop_id));
+              formdata.append('pid', '');
             }
 
             handleSubmit(formdata);
@@ -206,7 +206,7 @@ const AddNewSliderScreen = ({ match, history }) => {
               <div>
                 <div className="">
                   <div>
-                    {sliderType === "1" ? (
+                    {sliderType === '1' ? (
                       <h4> Top Sliders </h4>
                     ) : (
                       <h4> Bottom Sliders </h4>
@@ -215,7 +215,7 @@ const AddNewSliderScreen = ({ match, history }) => {
                     <Card className="my-4">
                       <Card.Body>
                         <div>
-                          {sliderType === "1" ? (
+                          {sliderType === '1' ? (
                             <Carousel pause="hover" className="bg-light">
                               {sliders &&
                                 sliders.top &&
@@ -223,8 +223,8 @@ const AddNewSliderScreen = ({ match, history }) => {
                                   <Carousel.Item
                                     key={item._id}
                                     style={{
-                                      height: "200px",
-                                      cursor: "pointer",
+                                      height: '200px',
+                                      cursor: 'pointer',
                                     }}
                                     onClick={() => {
                                       slide = Number(item.id);
@@ -246,7 +246,7 @@ const AddNewSliderScreen = ({ match, history }) => {
                                       setSelectedProductOption(value2);
                                       setShow({
                                         status: true,
-                                        action: "update",
+                                        action: 'update',
                                         value: Number(item.id),
                                       });
                                     }}
@@ -256,11 +256,11 @@ const AddNewSliderScreen = ({ match, history }) => {
                                       alt=""
                                       fluid
                                       style={{
-                                        top: "0",
-                                        left: "0",
-                                        minWidth: "100%",
-                                        height: "100%",
-                                        objectFit: "contain",
+                                        top: '0',
+                                        left: '0',
+                                        minWidth: '100%',
+                                        height: '100%',
+                                        objectFit: 'contain',
                                       }}
                                     />
                                   </Carousel.Item>
@@ -274,8 +274,8 @@ const AddNewSliderScreen = ({ match, history }) => {
                                   <Carousel.Item
                                     key={item._id}
                                     style={{
-                                      height: "200px",
-                                      cursor: "pointer",
+                                      height: '200px',
+                                      cursor: 'pointer',
                                     }}
                                     onClick={() => {
                                       slide = Number(item.id);
@@ -297,7 +297,7 @@ const AddNewSliderScreen = ({ match, history }) => {
                                       setSelectedProductOption(value2);
                                       setShow({
                                         status: true,
-                                        action: "update",
+                                        action: 'update',
                                         value: Number(item.id),
                                       });
                                     }}
@@ -307,11 +307,11 @@ const AddNewSliderScreen = ({ match, history }) => {
                                       alt=""
                                       fluid
                                       style={{
-                                        top: "0",
-                                        left: "0",
-                                        minWidth: "100%",
-                                        height: "100%",
-                                        objectFit: "contain",
+                                        top: '0',
+                                        left: '0',
+                                        minWidth: '100%',
+                                        height: '100%',
+                                        objectFit: 'contain',
                                       }}
                                     />
                                   </Carousel.Item>
@@ -331,21 +331,25 @@ const AddNewSliderScreen = ({ match, history }) => {
                       label="Aspect Ratio"
                       name="aspectratio"
                       type="number"
+                      min="0"
                     />
                   </div>
 
                   <button
-                    className="btn btn-secondary mt-4 w-25 h-50 mx-4"
+                    className="btn btn-secondary mt-4 w-25 h-50 mx-4 "
                     onClick={(e) => {
                       e.preventDefault();
-                      const id =
-                        sliderType === "1"
-                          ? sliders.top && sliders.top[0].id
-                          : sliders.bottom && sliders.bottom[0].id;
-
-                      setId(id);
-                      formik.submitForm();
-                      slide = 0;
+                      if (formik.values.aspectratio > 0) {
+                        const id =
+                          sliderType === '1'
+                            ? sliders.top && sliders.top[0].id
+                            : sliders.bottom && sliders.bottom[0].id;
+                        setId(id);
+                        formik.submitForm();
+                        slide = 0;
+                      } else {
+                        window.alert('Aspect Ratio should be greater than 0');
+                      }
                     }}
                   >
                     Update Ratio
@@ -354,10 +358,10 @@ const AddNewSliderScreen = ({ match, history }) => {
                     className="btn btn-secondary h-50 my-1 w-25 mx-4 mt-4"
                     onClick={(e) => {
                       e.preventDefault();
-                      formik.setFieldValue("image", "");
-                      setSliderImage("");
+                      formik.setFieldValue('image', '');
+                      setSliderImage('');
                       setId(0);
-                      setShow({ status: true, action: "add", value: "" });
+                      setShow({ status: true, action: 'add', value: '' });
                       setSelectedProductOption(null);
                       setSelectedOption(null);
                     }}
@@ -368,7 +372,7 @@ const AddNewSliderScreen = ({ match, history }) => {
                 <Modal
                   show={show.status}
                   onHide={() => {
-                    setShow({ status: false, action: "add", value: "" });
+                    setShow({ status: false, action: 'add', value: '' });
                     setId(0);
                     slide = 0;
                   }}
@@ -381,10 +385,10 @@ const AddNewSliderScreen = ({ match, history }) => {
                     <div>
                       <Card
                         className="my-2 p-1 rounded"
-                        style={{ height: "280px", objectFit: "cover" }}
+                        style={{ height: '280px', objectFit: 'cover' }}
                       >
                         <Card.Img
-                          style={{ height: "270px", objectFit: "contain" }}
+                          style={{ height: '270px', objectFit: 'contain' }}
                           src={sliderImage}
                           variant="top"
                         />
@@ -400,7 +404,7 @@ const AddNewSliderScreen = ({ match, history }) => {
                           <ErrorMessage
                             component="div"
                             className="error text-danger"
-                            name={"image"}
+                            name={'image'}
                           />
                           <i className="bx bx-cloud-upload mx-2"></i>Upload
                           Slider Image
@@ -435,15 +439,15 @@ const AddNewSliderScreen = ({ match, history }) => {
                               name="shop_id"
                               placeholder="Search Shop"
                               onChange={(e) => {
-                                formik.setFieldValue("product_id", "");
-                                formik.setFieldValue("shop_id", e.value);
+                                formik.setFieldValue('product_id', '');
+                                formik.setFieldValue('shop_id', e.value);
                                 setSelectedProductOption(null);
                                 setSelectedOption(e);
                               }}
                               value={selectedOption}
                             />
                           ) : (
-                            ""
+                            ''
                           )}
                         </div>
                       </div>
@@ -455,7 +459,7 @@ const AddNewSliderScreen = ({ match, history }) => {
                       onClick={(e) => {
                         e.preventDefault();
                         if (
-                          formik.values.image !== "" ||
+                          formik.values.image !== '' ||
                           formik.values.image !== null ||
                           formik.values.image !== undefined
                         ) {
@@ -471,7 +475,7 @@ const AddNewSliderScreen = ({ match, history }) => {
                       Save
                     </button>
 
-                    {show.action === "update" ? (
+                    {show.action === 'update' ? (
                       <button
                         className="btn btn-danger mt-3 my-2 w-25 mx-2"
                         onClick={(e) => {
@@ -484,13 +488,13 @@ const AddNewSliderScreen = ({ match, history }) => {
                         Delete
                       </button>
                     ) : (
-                      ""
+                      ''
                     )}
                   </div>
                   {showalter ? (
                     <Alert variant="danger">Image is required</Alert>
                   ) : (
-                    ""
+                    ''
                   )}
                 </Modal>
               </Form>

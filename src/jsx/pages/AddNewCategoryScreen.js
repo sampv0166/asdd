@@ -200,6 +200,7 @@ const AddNewCategoryScreen = ({ match, history }) => {
                         label="English Name"
                         name="name_en"
                         type="text"
+                        pattern=".*\S+.*"
                       />
                     </div>
                     <div className="col-md-6">
@@ -207,6 +208,7 @@ const AddNewCategoryScreen = ({ match, history }) => {
                         label="Arabic Name"
                         name="name_ar"
                         type="text"
+                        pattern=".*\S+.*"
                       />
                     </div>
                   </div>

@@ -1,19 +1,19 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import Wizard from "../components/Forms/Wizard/Wizard";
-import { Alert, Card, Row, Tab, Tabs } from "react-bootstrap";
-import TextField from "../components/TextField";
-import { Form, Formik } from "formik";
-import { SketchPicker } from "react-color";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import Wizard from '../components/Forms/Wizard/Wizard';
+import { Alert, Card, Row, Tab, Tabs } from 'react-bootstrap';
+import TextField from '../components/TextField';
+import { Form, Formik } from 'formik';
+import { SketchPicker } from 'react-color';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   createSingleVariation,
   deleteVariationImage,
   insertSingleVariationImage,
   updateVariation,
-} from "../../actions/variationActions";
-import { listProductDetails } from "../../actions/productActions";
-import Loader from "../components/Loader";
-import Message from "../components/Message";
+} from '../../actions/variationActions';
+import { listProductDetails } from '../../actions/productActions';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 
 const VariationOptions = ({
   setShow,
@@ -27,7 +27,7 @@ const VariationOptions = ({
   varId,
   variations,
 }) => {
-  const [color, setColor] = useState("FAF5F5");
+  const [color, setColor] = useState('FAF5F5');
   const [hasOffer, sethasOffer] = useState({ checked: false });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
@@ -69,7 +69,10 @@ const VariationOptions = ({
         formikFileArray.push(file);
       });
 
-      formik.setFieldValue("images", formikFileArray);
+      formik.setFieldValue('images', formikFileArray);
+
+      console.log('in here')
+
     } else {
       if (e.target.files) {
         const filesArray = Array.from(e.target.files).map((file) =>
@@ -88,20 +91,21 @@ const VariationOptions = ({
         formikFileArray.push(file);
       });
 
-      formik.setFieldValue("images", formikFileArray);
+      formik.setFieldValue('images', formikFileArray);
+
     }
   };
 
   const renderPhotos = (source, formik) => {
     return source.map((photo, index) => {
-      return photo !== "https://khaymatapi.mvp-apps.ae/storage/" ? (
+      return photo !== 'https://khaymatapi.mvp-apps.ae/storage/' ? (
         <div className="col w-100">
           <Card
             className="my-2 p-1 rounded"
-            style={{ height: "180px", objectFit: "contain" }}
+            style={{ height: '180px', objectFit: 'contain' }}
           >
             <Card.Img
-              style={{ height: "170px", objectFit: "contain" }}
+              style={{ height: '170px', objectFit: 'contain' }}
               src={photo}
               variant="top"
               key={photo}
@@ -119,14 +123,14 @@ const VariationOptions = ({
               }
               type="button px-1"
               className="btn btn-white text-danger rounded fs-3"
-              style={{ position: "absolute" }}
+              style={{ position: 'absolute' }}
             >
               <i className="bx bx-trash"></i>
             </button>
           </Card>
         </div>
       ) : (
-        ""
+        ''
       );
     });
   };
@@ -142,7 +146,7 @@ const VariationOptions = ({
     e.preventDefault();
 
     if (selectedFiles.length === 1) {
-      alert("atleast one image required");
+      alert('atleast one image required');
       return;
     }
 
@@ -152,9 +156,9 @@ const VariationOptions = ({
     if (varId) {
       var url = `khaymatapi.mvp-apps.ae/storage/`;
       var result = fileToRemove.toString();
-      result = result.replace(url.toString(), "");
-      result = result.replace("://www.", "");
-      result = result.replace("https://", "");
+      result = result.replace(url.toString(), '');
+      result = result.replace('://www.', '');
+      result = result.replace('https://', '');
       deleteimageurl.push(result);
 
       //dispatch(deleteVariationImage(result, varId, productId));
@@ -162,35 +166,38 @@ const VariationOptions = ({
 
     setSelectedFiles(source);
     const files = Array.from(formikFileArray).filter((file, i) => index !== i);
-    formik.setFieldValue("images", files);
+    formik.setFieldValue('images', files);
     setFormikFileArray(files);
   };
 
   const addToVariationList = (formik) => {
-    formik.setFieldValue("blobImage", blobImages);
+    console.log('inhere')
+    formik.setFieldValue('blobImage', blobImages);
 
     setProductVariationList((prev) => [...prev, formik.values]);
-    formik.setFieldValue("price", "");
-    formik.setFieldValue("offerprice", "");
-    formik.setFieldValue("stocks", "");
-    formik.setFieldValue("color_name", "");
-    formik.setFieldValue("color_value", "");
-    formik.setFieldValue("hasoffer", "");
-    formik.setFieldValue("size_value", "");
+    formik.setFieldValue('price', '');
+    formik.setFieldValue('offerprice', '');
+    formik.setFieldValue('stocks', '');
+    formik.setFieldValue('color_name', '');
+    formik.setFieldValue('color_value', '');
+    formik.setFieldValue('hasoffer', '');
+    formik.setFieldValue('size_value', '');
     setFormikFileArray([]);
     setSelectedFiles([]);
-    formik.setFieldValue("images", []);
+    formik.setFieldValue('images', []);
   };
 
   const handleSaveVariation = (formik) => {
     if (
       formikFileArray.length === 0 ||
-      formik.values.price === "" ||
-      formik.values.stocks === "" ||
-      (formik.values.color_name !== "" && formik.values.color_value === "") ||
-      (hasColor.checked === true && formik.values.color_name === "") ||
-      (hasSize.checked === true && formik.values.size_value === "") ||
-      (hasOffer.checked === true && formik.values.offerprice === "")
+      formik.values.price === '' ||
+      formik.values.stocks === '' ||
+      (formik.values.color_name !== '' && formik.values.color_value === '') ||
+      (hasColor.checked === true && formik.values.color_name === '') ||
+      (hasSize.checked === true && formik.values.size_value === '') ||
+      (hasOffer.checked === true && formik.values.offerprice === '') ||
+      formik.values.offerprice < 0 ||
+      formik.values.offerprice > formik.values.price
     ) {
       setShowAlert(true);
       setTimeout(() => {
@@ -200,19 +207,19 @@ const VariationOptions = ({
     } else {
       if (productId) {
         let formdata = new FormData();
-        formdata.append("product_id", productId);
+        formdata.append('product_id', productId);
 
         if (varId) {
           for (var i = 0; i < formikFileArray.length; i++) {
-            if (typeof formikFileArray[i] === "string") {
+            if (typeof formikFileArray[i] === 'string') {
             } else {
               formdata.append(`images[${i}]`, formikFileArray[i]);
             }
           }
-          formdata.append("id", varId);
+          formdata.append('id', varId);
         } else {
-          if (typeof formik.values.images === "string") {
-            formdata.delete("images");
+          if (typeof formik.values.images === 'string') {
+            formdata.delete('images');
           } else {
             for (var i = 0; i < formik.values.images.length; i++) {
               formdata.append(`images[${i}]`, formik.values.images[i]);
@@ -220,15 +227,15 @@ const VariationOptions = ({
           }
         }
 
-        formdata.append("price", formik.values.price);
-        formdata.append("offerprice", formik.values.offerprice);
-        formdata.append("stocks", formik.values.stocks);
-        formdata.append("color_name", formik.values.color_name);
-        formdata.append("color_value", formik.values.color_value);
-        formdata.append("size_value", formik.values.size_value);
+        formdata.append('price', formik.values.price);
+        formdata.append('offerprice', formik.values.offerprice);
+        formdata.append('stocks', formik.values.stocks);
+        formdata.append('color_name', formik.values.color_name);
+        formdata.append('color_value', formik.values.color_value);
+        formdata.append('size_value', formik.values.size_value);
         formik.values.hasoffer === true
-          ? formdata.append("hasoffer", 1)
-          : formdata.append("hasoffer", 0);
+          ? formdata.append('hasoffer', 1)
+          : formdata.append('hasoffer', 0);
 
         if (varId) {
           dispatch(
@@ -253,7 +260,7 @@ const VariationOptions = ({
 
       setShow(false);
       setShowAlert(false);
-      setColor("");
+      setColor('');
     }
   };
 
@@ -288,13 +295,13 @@ const VariationOptions = ({
           enableReinitialize
           initialValues={{
             images: [],
-            price: productVariations.price || "",
+            price: productVariations.price || '',
             offerprice: productVariations.offerprice || 0,
-            stocks: productVariations.stocks || "",
-            color_name: productVariations.color_name || "",
-            color_value: productVariations.color_value || "",
-            hasoffer: productVariations.hasoffer || "",
-            size_value: productVariations.size_value || "",
+            stocks: productVariations.stocks || '',
+            color_name: productVariations.color_name || '',
+            color_value: productVariations.color_value || '',
+            hasoffer: productVariations.hasoffer || '',
+            size_value: productVariations.size_value || '',
             blobImage: [],
           }}
           onSubmit={(values, { resetForm }) => {}}
@@ -306,7 +313,7 @@ const VariationOptions = ({
                   <div className="row g-3">
                     <div className="my-4">
                       <label
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: 'pointer' }}
                         className="text-nowrap border shadow py-3 px-4 bg-white text-success add-photo rounded w-100"
                         htmlFor="file"
                       >
@@ -331,6 +338,7 @@ const VariationOptions = ({
                 <div className="my-4">
                   <div className="row g-3">
                     <div className="col-md-6">
+                    {console.log(formik.values)}
                       <TextField
                         className="form-control shadow-none rounded"
                         label="Price"
@@ -357,9 +365,9 @@ const VariationOptions = ({
                               ? (d = false)
                               : (d = true);
                             sethasOffer({ checked: d });
-                            formik.setFieldValue("hasoffer", d);
+                            formik.setFieldValue('hasoffer', d);
                             formik.setFieldValue(
-                              "offerprice",
+                              'offerprice',
                               formik.values.price
                             );
                           }}
@@ -378,7 +386,7 @@ const VariationOptions = ({
                         />
                       </div>
                     ) : (
-                      ""
+                      ''
                     )}
                   </div>
                 </div>
@@ -390,18 +398,24 @@ const VariationOptions = ({
                         label="Color Name"
                         name="color_name"
                         type="text"
+                        pattern=".*\S+.*"
                       />
                     </div>
                   ) : (
-                    ""
+                    ''
                   )}
 
                   {hasSize.checked ? (
                     <div className="col-md-6">
-                      <TextField label="Size" name="size_value" type="text" />
+                      <TextField
+                        label="Size"
+                        name="size_value"
+                        type="text"
+                        pattern=".*\S+.*"
+                      />
                     </div>
                   ) : (
-                    ""
+                    ''
                   )}
                 </div>
                 {hasColor.checked ? (
@@ -411,7 +425,7 @@ const VariationOptions = ({
                         color={color}
                         onChange={(updatedColor) => {
                           setColor(updatedColor.hex);
-                          formik.setFieldValue("color_value", updatedColor.hex);
+                          formik.setFieldValue('color_value', updatedColor.hex);
                         }}
                         width="300px"
                         height="50px"
@@ -419,14 +433,14 @@ const VariationOptions = ({
                     </div>
 
                     <div className="col-md-6">
-                      <input
-                        className={`form-control shadow-none rounded`}
+                      <div
+                        className={`dot`}
                         style={{ backgroundColor: `${color}` }}
-                      ></input>
+                      ></div>
                     </div>
                   </div>
                 ) : (
-                  ""
+                  ''
                 )}
               </div>
 
@@ -446,28 +460,29 @@ const VariationOptions = ({
               {showAlert ? (
                 selectedFiles.length === 0 ? (
                   <Alert variant="danger">image required</Alert>
-                ) : formik.values.price === "" || formik.values.price < 0 ? (
+                ) : formik.values.price === '' || formik.values.price < 0 ? (
                   <Alert variant="danger">price not valid</Alert>
-                ) : formik.values.stocks === "" ? (
+                ) : formik.values.stocks === '' ? (
                   <Alert variant="danger">stock is required</Alert>
-                ) : formik.values.color_name !== "" &&
-                  formik.values.color_value === "" ? (
+                ) : formik.values.color_name !== '' &&
+                  formik.values.color_value === '' ? (
                   <Alert variant="danger">select a color</Alert>
                 ) : hasColor.checked === true &&
-                  formik.values.color_name === "" ? (
+                  formik.values.color_name === '' ? (
                   <Alert variant="danger">color is required</Alert>
                 ) : hasSize.checked === true &&
-                  formik.values.size_value === "" ? (
+                  formik.values.size_value === '' ? (
                   <Alert variant="danger">size is required</Alert>
                 ) : (hasOffer.checked === true &&
-                    formik.values.offerprice === "") ||
-                  formik.values.offerprice < 0 ? (
+                    formik.values.offerprice === '') ||
+                  formik.values.offerprice < 0 ||
+                  formik.values.offerprice > formik.values.price ? (
                   <Alert variant="danger">offer price not valid</Alert>
                 ) : (
-                  ""
+                  ''
                 )
               ) : (
-                ""
+                ''
               )}
             </Form>
           )}

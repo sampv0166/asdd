@@ -1,18 +1,18 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 /// Link
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 /// Scroll
-import PerfectScrollbar from "react-perfect-scrollbar";
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 /// Menu
-import MetisMenu from "metismenujs";
+import MetisMenu from 'metismenujs';
 
 ///
-import drump from "../../../images/card/drump.png";
-import { useLayoutEffect } from "react";
-import { useSelector } from "react-redux";
+import drump from '../../../images/card/drump.png';
+import { useLayoutEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const MM = (props) => {
   return (
@@ -26,14 +26,14 @@ const MM = (props) => {
 
 const SideBar = () => {
   useLayoutEffect(() => {
-    var btn = document.querySelector(".nav-control");
-    var aaa = document.querySelector("#main-wrapper");
+    var btn = document.querySelector('.nav-control');
+    var aaa = document.querySelector('#main-wrapper');
 
     function toggleFunc() {
-      return aaa.classList.toggle("menu-toggle");
+      return aaa.classList.toggle('menu-toggle');
     }
 
-    btn.addEventListener("click", toggleFunc);
+    btn.addEventListener('click', toggleFunc);
   }, []);
 
   const path = window.location.pathname;
@@ -43,72 +43,72 @@ const SideBar = () => {
 
   /// Active menu
   let deshBoard = [
-      "",
-      "workout-statistic",
-      "workout-plan",
-      "distance-map",
-      "diet-food-menu",
-      "personal-record",
+      '',
+      'workout-statistic',
+      'workout-plan',
+      'distance-map',
+      'diet-food-menu',
+      'personal-record',
     ],
     app = [
-      "app-profile",
-      "app-calender",
-      "email-compose",
-      "email-inbox",
-      "email-read",
-      "ecom-product-grid/page",
-      "ecom-product-list",
-      "ecom-product-list",
-      "ecom-product-order",
-      "ecom-checkout",
-      "ecom-invoice",
-      "ecom-customers",
+      'app-profile',
+      'app-calender',
+      'email-compose',
+      'email-inbox',
+      'email-read',
+      'ecom-product-grid/page',
+      'ecom-product-list',
+      'ecom-product-list',
+      'ecom-product-order',
+      'ecom-checkout',
+      'ecom-invoice',
+      'ecom-customers',
     ],
     charts = [
-      "chart-flot",
-      "chart-morris",
-      "chart-chartjs",
-      "chart-chartist",
-      "chart-sparkline",
-      "chart-peity",
+      'chart-flot',
+      'chart-morris',
+      'chart-chartjs',
+      'chart-chartist',
+      'chart-sparkline',
+      'chart-peity',
     ],
     bootstrap = [
-      "ui-accordion",
-      "ui-badge",
-      "ui-alert",
-      "ui-button",
-      "ui-modal",
-      "ui-button-group",
-      "ui-list-group",
-      "ui-media-object",
-      "ui-card",
-      "ui-carousel",
-      "ui-dropdown",
-      "ui-popover",
-      "ui-progressbar",
-      "ui-tab",
-      "ui-typography",
-      "ui-pagination",
-      "ui-grid",
+      'ui-accordion',
+      'ui-badge',
+      'ui-alert',
+      'ui-button',
+      'ui-modal',
+      'ui-button-group',
+      'ui-list-group',
+      'ui-media-object',
+      'ui-card',
+      'ui-carousel',
+      'ui-dropdown',
+      'ui-popover',
+      'ui-progressbar',
+      'ui-tab',
+      'ui-typography',
+      'ui-pagination',
+      'ui-grid',
     ],
     plugins = [
-      "uc-select2",
-      "uc-nestable",
-      "uc-sweetalert",
-      "uc-toastr",
-      "uc-jqvmap",
-      "uc-noui-slider",
+      'uc-select2',
+      'uc-nestable',
+      'uc-sweetalert',
+      'uc-toastr',
+      'uc-jqvmap',
+      'uc-noui-slider',
     ],
-    widget = ["widget"],
-    shop = ["shops"],
+    widget = ['widget'],
+    shop = ['shops'],
     forms = [
-      "form-element",
-      "form-wizard",
-      "form-editor-summernote",
-      "form-pickers",
-      "form-validation-jquery",
+      'form-element',
+      'form-wizard',
+      'form-editor-summernote',
+      'form-pickers',
+      'form-validation-jquery',
     ],
-    table = ["table-bootstrap-basic", "table-datatable-basic"];
+    table = ['table-bootstrap-basic', 'table-datatable-basic'];
 
   return (
     <div className="deznav  " id="no-print">
@@ -116,40 +116,18 @@ const SideBar = () => {
         <MM className="metismenu" id="menu">
           <li
             className={`${
-              deshBoard.includes(path.slice(1)) ? "mm-active" : ""
+              deshBoard.includes(path.slice(1)) ? 'mm-active' : ''
             }`}
           >
-            <Link className="has-arrow ai-icon" to="#" aria-expanded="false">
+            <Link to="/" aria-expanded="false">
               <i className="flaticon-381-networking"></i>
               <span className="nav-text">Dashboard</span>
             </Link>
-            <ul aria-expanded="false">
-              <li>
-                <Link to="/">Dashboard</Link>
-              </li>
-              {/*<li>
-                         <Link to="/workout-statistic">
-                            Workout Statistic
-                         </Link>
-                      </li>
-                      <li>
-                         <Link to="/workout-plan">Workout Plan</Link>
-                      </li>
-                      <li>
-                         <Link to="/distance-map">Distance Map</Link>
-                      </li>
-                      <li>
-                         <Link to="/diet-food-menu">DIet Food Menu</Link>
-                      </li>
-                      <li>
-                         <Link to="/personal-record">Personal Record</Link>
-                      </li>*/}
-            </ul>
           </li>
 
           <li
             className={`${
-              path.slice(1).includes("ecom-product-grid") ? "mm-active" : ""
+              path.slice(1).includes('ecom-product-grid') ? 'mm-active' : ''
             }`}
           >
             <Link
@@ -163,7 +141,7 @@ const SideBar = () => {
           </li>
 
           <li
-            className={`${path.slice(1).includes("shops") ? "mm-active" : ""}`}
+            className={`${path.slice(1).includes('shops') ? 'mm-active' : ''}`}
           >
             <Link
               to={`/shops/page/1`}
@@ -176,7 +154,7 @@ const SideBar = () => {
           </li>
 
           <li
-            className={`${path.slice(1).includes("orders") ? "mm-active" : ""}`}
+            className={`${path.slice(1).includes('orders') ? 'mm-active' : ''}`}
           >
             <Link
               to={`/orders/page/1`}
@@ -190,7 +168,7 @@ const SideBar = () => {
 
           <li
             className={`${
-              path.slice(1).includes("category") ? "mm-active" : ""
+              path.slice(1).includes('category') ? 'mm-active' : ''
             }`}
           >
             <Link to={`/category`} className="ai-icon" aria-expanded="false">
@@ -199,11 +177,11 @@ const SideBar = () => {
             </Link>
           </li>
 
-          {userInfo.user.typeofuser === "S" ||
-          userInfo.user.typeofuser === "A" ? (
+          {userInfo.user.typeofuser === 'S' ||
+          userInfo.user.typeofuser === 'A' ? (
             <li
               className={`${
-                path.slice(1).includes("usersList") ? "mm-active" : ""
+                path.slice(1).includes('usersList') ? 'mm-active' : ''
               }`}
             >
               <Link
@@ -216,12 +194,12 @@ const SideBar = () => {
               </Link>
             </li>
           ) : (
-            ""
+            ''
           )}
 
           <li
             className={`${
-              path.slice(1).includes("coupons") ? "mm-active" : ""
+              path.slice(1).includes('coupons') ? 'mm-active' : ''
             }`}
           >
             <Link to={`/coupons`} className="ai-icon" aria-expanded="false">
@@ -230,10 +208,10 @@ const SideBar = () => {
             </Link>
           </li>
 
-          {userInfo.user.typeofuser === "S" ? (
+          {userInfo.user.typeofuser === 'S' ? (
             <li
               className={`${
-                path.slice(1).includes("sliders") ? "mm-active" : ""
+                path.slice(1).includes('sliders') ? 'mm-active' : ''
               }`}
             >
               <Link to={`/sliders/1`} className="ai-icon" aria-expanded="false">
@@ -250,25 +228,25 @@ const SideBar = () => {
               </ul>
             </li>
           ) : (
-            ""
+            ''
           )}
 
-          {userInfo.user.typeofuser === "S" ? (
+          {userInfo.user.typeofuser === 'S' ? (
             <li
               className={`${
-                path.slice(1).includes("settings") ? "mm-active" : ""
+                path.slice(1).includes('settings') ? 'mm-active' : ''
               }`}
             >
-              <Link className="ai-icon" to={"/settings"} aria-expanded="false">
+              <Link className="ai-icon" to={'/settings'} aria-expanded="false">
                 <i class="bx bxs-truck"></i>
                 <span className="nav-text">Delivery Charges</span>
               </Link>
             </li>
           ) : (
-            ""
+            ''
           )}
 
-          {/*<li className={`${app.includes(path.slice(1)) ? "mm-active" : ""}`}>
+         { /* <li className={`${app.includes(path.slice(1)) ? 'mm-active' : ''}`}>
             <Link className="has-arrow ai-icon" to="#" aria-expanded="false">
               <i className="flaticon-381-television"></i>
               <span className="nav-text">Apps</span>
@@ -327,7 +305,7 @@ const SideBar = () => {
             </ul>
           </li>
           <li
-            className={`${charts.includes(path.slice(1)) ? "mm-active" : ""}`}
+            className={`${charts.includes(path.slice(1)) ? 'mm-active' : ''}`}
           >
             <Link className="has-arrow ai-icon" to="#" aria-expanded="false">
               <i className="flaticon-381-controls-3"></i>
@@ -353,7 +331,7 @@ const SideBar = () => {
           </li>
           <li
             className={`${
-              bootstrap.includes(path.slice(1)) ? "mm-active" : ""
+              bootstrap.includes(path.slice(1)) ? 'mm-active' : ''
             }`}
           >
             <Link className="has-arrow ai-icon" to="#" aria-expanded="false">
@@ -415,9 +393,7 @@ const SideBar = () => {
             </ul>
           </li>
           <li
-            className={`${
-              plugins.includes(path.slice(1)) ? "mm-active" : ""
-            }`}
+            className={`${plugins.includes(path.slice(1)) ? 'mm-active' : ''}`}
           >
             <Link className="has-arrow ai-icon" to="#" aria-expanded="false">
               <i className="flaticon-381-heart"></i>
@@ -446,7 +422,7 @@ const SideBar = () => {
           </li>
 
           <li
-            className={`${widget.includes(path.slice(1)) ? "mm-active" : ""}`}
+            className={`${widget.includes(path.slice(1)) ? 'mm-active' : ''}`}
           >
             <Link to="widget-basic" className="ai-icon" aria-expanded="false">
               <i className="flaticon-381-settings-2"></i>
@@ -454,9 +430,7 @@ const SideBar = () => {
             </Link>
           </li>
 
-          <li
-            className={`${forms.includes(path.slice(1)) ? "mm-active" : ""}`}
-          >
+          <li className={`${forms.includes(path.slice(1)) ? 'mm-active' : ''}`}>
             <Link className="has-arrow ai-icon" to="#" aria-expanded="false">
               <i className="flaticon-381-notepad"></i>
               <span className="nav-text forms">Forms</span>
@@ -479,9 +453,7 @@ const SideBar = () => {
               </li>
             </ul>
           </li>
-          <li
-            className={`${table.includes(path.slice(1)) ? "mm-active" : ""}`}
-          >
+          <li className={`${table.includes(path.slice(1)) ? 'mm-active' : ''}`}>
             <Link className="has-arrow ai-icon" to="#" aria-expanded="false">
               <i className="flaticon-381-network"></i>
               <span className="nav-text">Table</span>
