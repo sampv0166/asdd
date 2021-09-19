@@ -122,6 +122,7 @@ const reducer = combineReducers({
 
   listSettings: settingsListReducer,
   updateSettings: settingsCreateReducer,
+  
 
   analytics : analyticsReducer
 });

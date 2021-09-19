@@ -6,7 +6,7 @@ import {
 } from "../constants/analyticsConstants";
 import { BASE_URL } from "../constants/Globals";
 
-export const getAnalytics = () => async (dispatch) => {
+export const getAnalytics = (shopId) => async (dispatch) => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   const config = {
@@ -15,17 +15,28 @@ export const getAnalytics = () => async (dispatch) => {
     },
   };
 
-  try {
-    dispatch({ type: ANALYTICS_REQUEST });
-    const { data } = await axios.get(
-      `${BASE_URL}api/v2/admin/analytics`,
-      config
-    );
+  let d;
 
+  try {
+    if (shopId) {
+      dispatch({ type: ANALYTICS_REQUEST });
+      const { data } = await axios.get(
+        `${BASE_URL}api/v2/admin/analytics?shop_id=${shopId}`,
+        config
+      );
+      d = data;
+    } else {
+      dispatch({ type: ANALYTICS_REQUEST });
+      const { data } = await axios.get(
+        `${BASE_URL}api/v2/admin/analytics`,
+        config
+      );
+      d = data;
+    }
 
     dispatch({
       type: ANALYTICS_SUCCESS,
-      payload: data,
+      payload: d,
     });
   } catch (error) {
     dispatch({

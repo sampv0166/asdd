@@ -5,40 +5,40 @@ import React, {
   useLayoutEffect,
   useRef,
   useState,
-} from 'react';
-import Products from './Products';
-import debounce from 'lodash.debounce';
-import Select from '../../../Select';
+} from "react";
+import Products from "./Products";
+import debounce from "lodash.debounce";
+import Select from "../../../Select";
 
 /// Data
-import productData from '../productData';
+import productData from "../productData";
 
-import PageTitle from '../../../../layouts/PageTitle';
+import PageTitle from "../../../../layouts/PageTitle";
 
-import { Button, Dropdown, Nav, Pagination } from 'react-bootstrap';
-import Paginate from '../../../Paginate';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Col, Dropdown, Nav, Pagination } from "react-bootstrap";
+import Paginate from "../../../Paginate";
+import { useDispatch, useSelector } from "react-redux";
 import {
   listProductDetails,
   listProducts,
-} from '../../../../../actions/productActions';
-import { Link } from 'react-router-dom';
-import Loader from '../../../Loader';
-import Message from '../../../Message';
-import { Formik } from 'formik';
-import { set } from 'date-fns';
-import { getAllShops } from '../../../../../actions/shopActions';
-import SelectInput from '@material-ui/core/Select/SelectInput';
+} from "../../../../../actions/productActions";
+import { Link } from "react-router-dom";
+import Loader from "../../../Loader";
+import Message from "../../../Message";
+import { Formik } from "formik";
+import { set } from "date-fns";
+import { getAllShops } from "../../../../../actions/shopActions";
+import SelectInput from "@material-ui/core/Select/SelectInput";
 
 const ProductGrid = ({ match, history }) => {
-  const [keyword, setKeyword] = useState('');
-  const [inputValue, setInputValue] = useState('');
+  const [keyword, setKeyword] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [all, setAll] = useState({ checked: true });
   const [deleted, setDeleted] = useState({ checked: false });
 
   const [active, setActive] = useState({ checked: false });
 
-  const [selectedvalue, setSelectedValue] = useState('');
+  const [selectedvalue, setSelectedValue] = useState("");
 
   let pageNumber = match.params.pageNumber || 1;
   const selectref = useRef();
@@ -57,32 +57,32 @@ const ProductGrid = ({ match, history }) => {
 
   const shopListDetails = useSelector((state) => state.shopListDetails);
   const { loading: load, error: err, shop } = shopListDetails;
-  const user = JSON.parse(localStorage.getItem('userInfo'));
-  const [shopss, setShopss] = useState([{ key: '', value: '' }]);
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+  const [shopss, setShopss] = useState([{ key: "", value: "" }]);
 
   let shopid = 0;
 
   const populateShops = () => {
-    if (user.user.typeofuser === 'A' || user.user.typeofuser === 'U') {
+    if (user.user.typeofuser === "A" || user.user.typeofuser === "U") {
       let objects = [2];
 
       objects[0] = {
         key: shop.shop_name,
         value: shop.id,
       };
-      objects.unshift({ key: 'choose', value: '' });
+      objects.unshift({ key: "choose", value: "" });
       setShopss(objects);
 
       return objects;
     }
 
-    if (user.user.typeofuser === 'S') {
+    if (user.user.typeofuser === "S") {
       let objects = [shops.length];
       for (var x = 0; x < shops.length; x++) {
         objects[x] = { key: shops[x].shop_name_en, value: shops[x].id };
       }
 
-      objects.unshift({ key: 'Sort By Shop', value: '' });
+      objects.unshift({ key: "Sort By Shop", value: "" });
       setShopss(objects);
       return objects;
     }
@@ -114,7 +114,7 @@ const ProductGrid = ({ match, history }) => {
   }, [dispatch, pageNumber, products, shops]);
 
   useLayoutEffect(() => {
-    dispatch(listProducts(pageNumber, inputValue, ''));
+    dispatch(listProducts(pageNumber, inputValue, ""));
     dispatch(listProductDetails(0));
     dispatch(getAllShops());
     populateShops();
@@ -135,9 +135,9 @@ const ProductGrid = ({ match, history }) => {
   const pag = (size, gutter, variant, bg, circle) => (
     <Pagination
       size={size}
-      className={`mt-4  ${gutter ? 'pagination-gutter' : ''} ${
+      className={`mt-4  ${gutter ? "pagination-gutter" : ""} ${
         variant && `pagination-${variant}`
-      } ${!bg && 'no-bg'} ${circle && 'pagination-circle'}`}
+      } ${!bg && "no-bg"} ${circle && "pagination-circle"}`}
     >
       {items}
     </Pagination>
@@ -189,7 +189,7 @@ const ProductGrid = ({ match, history }) => {
                 </div>
               </div>
 
-              {user.user.typeofuser === 'S' ? (
+              {user.user.typeofuser === "S" ? (
                 <div className="col-md-5">
                   <div className="mx-2">
                     <select
@@ -215,7 +215,7 @@ const ProductGrid = ({ match, history }) => {
                   </div>
                 </div>
               ) : (
-                ''
+                ""
               )}
 
               {/*<div className="form-check form-switch">
@@ -265,7 +265,7 @@ const ProductGrid = ({ match, history }) => {
                   <button
                     className="btn  btn-secondary"
                     onClick={() => {
-                      history.push('/ecom/addnewproduct');
+                      history.push("/ecom/addnewproduct");
                       dispatch(listProductDetails(0));
                     }}
                   >
@@ -277,24 +277,26 @@ const ProductGrid = ({ match, history }) => {
           </div>
 
           <div className="row">
-            {console.log(products.length)}
+            
             {products.length > 0 ? (
               products &&
               products.map((product) => (
-                <Products
-                  key={product.key}
-                  product={product}
-                  history={history}
-                />
+                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                  <Products
+                    key={product.id}
+                    product={product}
+                    history={history}
+                  />
+                </Col>
               ))
             ) : (
               <h3 className="my-3 mx-4">No Products</h3>
             )}
           </div>
           {products.length !== 0 ? (
-            <Nav>{pag('', true, 'danger', true, false)}</Nav>
+            <Nav>{pag("", true, "danger", true, false)}</Nav>
           ) : (
-            ''
+            ""
           )}
         </Fragment>
       )}

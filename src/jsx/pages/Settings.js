@@ -1,10 +1,10 @@
-import { Form, Formik } from 'formik';
-import React, { useEffect, useLayoutEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getSettings } from '../../actions/settingsActions';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
-import TextField from '../components/TextField';
+import { Form, Formik } from "formik";
+import React, { useEffect, useLayoutEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getSettings, postSettings } from "../../actions/settingsActions";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import TextField from "../components/TextField";
 
 const Settings = ({ history }) => {
   const listSettings = useSelector((state) => state.listSettings);
@@ -13,13 +13,14 @@ const Settings = ({ history }) => {
 
   useLayoutEffect(() => {
     let formdata = new FormData();
-    formdata.append('action', 'get');
+    formdata.append("action", "get");
     dispatch(getSettings(formdata, dispatch));
-  }, []);
+  
+  }, [dispatch]);
 
-  const handleSubmit = async (formdata) => {
-    dispatch(getSettings(formdata, dispatch));
-    history.goBack();
+
+  const handleSubmit = (formdata) => {
+    dispatch(postSettings(formdata, dispatch));
   };
 
   return (
@@ -32,17 +33,17 @@ const Settings = ({ history }) => {
         <Formik
           enableReinitialize
           initialValues={{
-            uae_delivery: (settings && settings.uae_delivery) || '',
-            ksa_delivery: (settings && settings.ksa_delivery) || '',
-            oman_delivery: (settings && settings.oman_delivery) || '',
+            uae_delivery: (settings && settings.uae_delivery) || "",
+            ksa_delivery: (settings && settings.ksa_delivery) || "",
+            oman_delivery: (settings && settings.oman_delivery) || "",
           }}
           onSubmit={(values) => {
             let formdata = new FormData();
 
-            formdata.append('uae_delivery', values.uae_delivery);
-            formdata.append('ksa_delivery', values.ksa_delivery);
-            formdata.append('oman_delivery', values.oman_delivery);
-            formdata.append('action', 'update');
+            formdata.append("uae_delivery", values.uae_delivery);
+            formdata.append("ksa_delivery", values.ksa_delivery);
+            formdata.append("oman_delivery", values.oman_delivery);
+            formdata.append("action", "update");
 
             handleSubmit(formdata);
           }}

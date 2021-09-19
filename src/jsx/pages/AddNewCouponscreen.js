@@ -163,7 +163,7 @@ const AddNewCouponscreen = ({ history, match }) => {
 
     couponsList.coupons.map((item) => {
       if (couponId == item.id) {
-        console.log(item);
+   
         setCoupon(item);
         if (item.product_ids !== null) {
           PopulateProductIds(item.product_ids);
@@ -174,7 +174,7 @@ const AddNewCouponscreen = ({ history, match }) => {
             });
           }
         } else {
-          console.log(item);
+         
           if (item.shop_id !== null) {
             setSelectedShopOption({
               value: item.shop_id,
@@ -238,7 +238,7 @@ const AddNewCouponscreen = ({ history, match }) => {
               );
             }
 
-            console.log(newArray);
+          
             if (newArray !== null && newArray !== undefined) {
               let objects = new Array(newArray.length);
               for (var x = 0; x < newArray.length; x++) {
@@ -250,7 +250,7 @@ const AddNewCouponscreen = ({ history, match }) => {
                 }
               }
             }
-            console.log(CommaSeperated);
+           
             if (
               CommaSeperated !== undefined &&
               CommaSeperated !== null &&
@@ -260,7 +260,7 @@ const AddNewCouponscreen = ({ history, match }) => {
             } else {
             }
 
-            console.log(values.expiry);
+           
             formdata.append("expired_at", values.expiry);
             formdata.append("code", values.code);
             formdata.append("description_en", values.description_en);
@@ -364,7 +364,7 @@ const AddNewCouponscreen = ({ history, match }) => {
                       onChange={(e) => {
                         setSelectedOption(e);
                         formik.setFieldValue("product_id", e);
-                        console.log(e);
+                       
                         setSelectedShopOption(null);
                       }}
                     />
@@ -391,7 +391,7 @@ const AddNewCouponscreen = ({ history, match }) => {
                           setSelectedShopOption(e);
                           setSelectedOption(null);
                           formik.setFieldValue("shop_id", e);
-                          console.log(e);
+                       
                         }}
                       />
                     </div>

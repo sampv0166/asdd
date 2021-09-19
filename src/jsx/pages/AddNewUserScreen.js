@@ -565,6 +565,7 @@ const AddNewUserScreen = ({ match, history }) => {
                 </div>
 
                 {userInfo.user.typeofuser !== "U" ? (
+                  
                   <Row className = 'container-fluid'>
                     <Col className="col-md-3 my-4">
                       Product Permissions

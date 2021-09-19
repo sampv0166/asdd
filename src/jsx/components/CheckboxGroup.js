@@ -20,7 +20,7 @@ function CheckboxGroup(props) {
                     {...rest}
                     checked={option.value}
                   />
-                  {console.log(rest)}
+              
                   <label htmlFor={option.value}>{option.key}</label>
                 </div>
               </React.Fragment>

@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { Card, Col, Table } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { listProductDetails } from '../../actions/productActions';
-import { deleteVariation } from '../../actions/variationActions';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
-import checkPermission from './checkpermission';
+import React, { useEffect, useMemo } from "react";
+import { Card, Col, Table } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { listProductDetails } from "../../actions/productActions";
+import { deleteVariation } from "../../actions/variationActions";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import checkPermission from "./checkpermission";
 
 const VariationTable = ({
   hasVariant,
@@ -19,22 +19,27 @@ const VariationTable = ({
   setVarId,
   history,
   blobImages,
+  match,
+  show,
 }) => {
-  const TableHead = ['ID', 'PRICE', 'SIZE', 'COLOR', ' '];
+  const TableHead = ["ID", "PRICE", "SIZE", "COLOR", " "];
 
   let altimage;
 
+  const pid = match.params.id;
+
   const dispatch = useDispatch();
+  
   const handleDeletevariation = async (e, id, i) => {
     e.preventDefault();
 
     if (productId && ProductVariationList.length === 1) {
-      alert('atleast one variation is required');
+      alert("atleast one variation is required");
       return;
     }
 
     if (productId) {
-      if (window.confirm('Are you sure')) {
+      if (window.confirm("Are you sure")) {
         let arr;
 
         arr = ProductVariationList.filter((item, index) => index !== i);
@@ -49,14 +54,14 @@ const VariationTable = ({
     }
   };
 
-  const renderVariationImages = (image) => {
+  const renderVariationImages = (image, i) => {
     return (
-      <span>
+      <span key={i}>
         <Card.Img
           style={{
-            height: '50px',
-            width: '50px',
-            objectFit: 'contain',
+            height: "50px",
+            width: "50px",
+            objectFit: "contain",
           }}
           src={image}
           variant="top"
@@ -73,17 +78,20 @@ const VariationTable = ({
     success: successproductDetails,
   } = productDetails;
 
-  useEffect(() => {}, [ProductVariationList, productId]);
+  const variationUpdate = useSelector((state) => state.variationUpdate);
+  const { loading: loadingVariationUpdate, error: errorVariationUpdate } =
+    variationUpdate;
+
+  //useEffect(() => {}, []);
 
   return (
     <>
-      {loadingproductDetails ? (
+      {loadingproductDetails || loadingVariationUpdate ? (
         <Loader />
-      ) : errorproductDetails ? (
-        <Message>{errorproductDetails}</Message>
+      ) : errorproductDetails || errorVariationUpdate ? (
+        <Message>{errorproductDetails || errorVariationUpdate}</Message>
       ) : (
         <div>
-          {console.log(blobImages)}
           <Col lg={12}>
             <div className="col-12 my-1 w-100">
               <Table responsive hover className="header-border verticle-middle">
@@ -97,50 +105,55 @@ const VariationTable = ({
                     )}
 
                     <th scope="col">PRICE</th>
-                    {!hasSize.checked ? '' : <th scope="col">SIZE</th>}
-                    {!hasColor.checked ? '' : <th scope="col">COLOR</th>}
+                    {!hasSize.checked ? "" : <th scope="col">SIZE</th>}
+                    {!hasColor.checked ? "" : <th scope="col">COLOR</th>}
                     <th scope="col" className="d-flex justify-content-center">
                       Action
                     </th>
                   </tr>
                 </thead>
                 <tbody>
+               
                   {ProductVariationList.length > 0
                     ? ProductVariationList.map((item, index) => (
                         <tr key={index}>
+                      
                           <td>{index}</td>
 
                           {productId ? (
                             <td>
-                              {item.images.map((image) => {
+                             
+                              {item.images.map((image, i) => {
                                 if (
                                   image ===
-                                  'https://khaymatapi.mvp-apps.ae/storage/'
+                                  "https://khaymatapi.mvp-apps.ae/storage/"
                                 ) {
                                 } else {
-                                  return renderVariationImages(image);
+                                  return renderVariationImages(image, i);
                                 }
                               })}
                             </td>
                           ) : (
                             <td>
-                              {item.images.map((image) => {
+                              {item.images.map((image, i) => {
                                 if (
                                   image ===
-                                  'https://khaymatapi.mvp-apps.ae/storage/'
+                                  "https://khaymatapi.mvp-apps.ae/storage/"
                                 ) {
                                 } else {
+                                 
                                   const blobImage = URL.createObjectURL(image);
-                                  return renderVariationImages(blobImage);
+
+                                  return renderVariationImages(blobImage, i);
                                 }
                               })}
                             </td>
                           )}
 
                           <td>{item.price}</td>
-                          {!hasSize.checked ? '' : <td>{item.size_value}</td>}
+                          {!hasSize.checked ? "" : <td>{item.size_value}</td>}
                           {!hasColor.checked ? (
-                            ''
+                            ""
                           ) : (
                             <td>
                               <div
@@ -151,17 +164,17 @@ const VariationTable = ({
                               ></div>
                             </td>
                           )}
-                          
+
                           <td>
                             <div className="d-flex justify-content-around">
                               <i
                                 className="fa fa-trash"
                                 style={{
-                                  cursor: 'pointer',
-                                  color: 'red',
+                                  cursor: "pointer",
+                                  color: "red",
                                 }}
                                 onClick={(e) => {
-                                  checkPermission(history, 'variation.delete');
+                                  checkPermission(history, "variation.delete");
                                   handleDeletevariation(e, item.id, index);
                                 }}
                               ></i>
@@ -170,13 +183,13 @@ const VariationTable = ({
                                 <i
                                   className="fa fa-pencil"
                                   style={{
-                                    cursor: 'pointer',
-                                    color: 'blue',
+                                    cursor: "pointer",
+                                    color: "blue",
                                   }}
                                   onClick={() => {
                                     checkPermission(
                                       history,
-                                      'variation.update'
+                                      "variation.update"
                                     );
                                     dispatch(listProductDetails(productId));
                                     setShowOptions(true);
@@ -184,13 +197,13 @@ const VariationTable = ({
                                   }}
                                 ></i>
                               ) : (
-                                ''
+                                ""
                               )}
                             </div>
                           </td>
                         </tr>
                       ))
-                    : ''}
+                    : ""}
                 </tbody>
               </Table>
             </div>

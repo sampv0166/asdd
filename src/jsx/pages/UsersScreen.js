@@ -127,7 +127,7 @@ const UsersScreen = ({ history, match }) => {
                 <tbody>
                   {users &&
                     users.map((item, index) => (
-                      <tr>
+                      <tr key = {index}>
                         <td>
                           <strong>{item.id}</strong>
                         </td>

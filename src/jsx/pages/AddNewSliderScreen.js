@@ -221,7 +221,7 @@ const AddNewSliderScreen = ({ match, history }) => {
                                 sliders.top &&
                                 sliders.top.map((item, i) => (
                                   <Carousel.Item
-                                    key={item._id}
+                                    key={item.id}
                                     style={{
                                       height: '200px',
                                       cursor: 'pointer',
@@ -272,14 +272,14 @@ const AddNewSliderScreen = ({ match, history }) => {
                                 sliders.bottom &&
                                 sliders.bottom.map((item, i) => (
                                   <Carousel.Item
-                                    key={item._id}
+                                    key={item.id}
                                     style={{
                                       height: '200px',
                                       cursor: 'pointer',
                                     }}
                                     onClick={() => {
                                       slide = Number(item.id);
-                                      console.log(slide);
+                                     
                                       setId(Number(item.id));
                                       setSliderImage(item.fullurl);
                                       sliderid = item.id;

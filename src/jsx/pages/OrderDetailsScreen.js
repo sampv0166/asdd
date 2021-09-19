@@ -16,6 +16,8 @@ const OrderDetailsScreen = ({ match, history, setHasVariant }) => {
   const componentRef = useRef();
   const orderId = match.params.id;
 
+  let subtotal = 0;
+
   const dispatch = useDispatch();
   var utc = new Date().toJSON().slice(0, 10).replace(/-/g, "/");
   useEffect(() => {
@@ -25,6 +27,17 @@ const OrderDetailsScreen = ({ match, history, setHasVariant }) => {
   useLayoutEffect(() => {
     dispatch(listOrderDetailsById(orderId));
   }, [dispatch, orderId]);
+
+  const findSubTotal = () => {
+    let subtotal = 0;
+
+    ordersDetails.products &&
+      ordersDetails.products.map((item, index) => {
+        subtotal = subtotal + item.quantity * item.product_price;
+      });
+
+    return subtotal;
+  };
 
   return (
     <>
@@ -143,6 +156,7 @@ const OrderDetailsScreen = ({ match, history, setHasVariant }) => {
                                 <td className="left strong">{item.name_en}</td>
                                 <td className="left">{item.name_en}</td>
                                 <td className="right">{item.product_price}</td>
+
                                 <td className="center">{item.quantity} </td>
                                 <td className="right">
                                   {" "}
@@ -160,12 +174,11 @@ const OrderDetailsScreen = ({ match, history, setHasVariant }) => {
                           <tbody>
                             <tr>
                               <td className="left">
-                                <strong>Delivery Charges</strong>
+                                <strong>Sub Total</strong>
                               </td>
-                              <td className="right">
-                                {ordersDetails.delivery_charge}
-                              </td>
+                              <td className="right">{findSubTotal()}</td>
                             </tr>
+
                             <tr>
                               <td className="left">
                                 <strong>Discount </strong>
@@ -174,15 +187,33 @@ const OrderDetailsScreen = ({ match, history, setHasVariant }) => {
                                 {ordersDetails.couponvalue}
                               </td>
                             </tr>
+
                             <tr>
+                              <td className="left">
+                                <strong>Net Total </strong>
+                              </td>
+                              <td className="right">
+                                {findSubTotal() - ordersDetails.couponvalue}
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td className="left">
+                                <strong>Delivery Charges</strong>
+                              </td>
+                              <td className="right">
+                                {ordersDetails.delivery_charge}
+                              </td>
+                            </tr>
+                            {/*<tr>
                               <td className="left">
                                 <strong>VAT (5%)</strong>
                               </td>
                               <td className="right">{ordersDetails.tax}</td>
-                            </tr>
+                            </tr>*/}
                             <tr>
                               <td className="left">
-                                <strong>Total</strong>
+                                <strong>Grand Total</strong>
                               </td>
                               <td className="right">
                                 <strong>${ordersDetails.total_amount}</strong>

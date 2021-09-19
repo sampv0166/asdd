@@ -3,30 +3,26 @@ import { Link } from "react-router-dom";
 
 const Products = ({ product, history }) => {
   return (
-    <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+    <div className="">
       <div className="card">
         <div className="card-body">
           <small> {`${product.id}`}</small>
           <div
             style={{ cursor: "pointer" }}
             onClick={() => {
-            
               history.push(`/ecom/product-edit/${product.id}`);
             }}
             className="new-arrival-product"
           >
-            <div
-              className="new-arrivals-img-contnent"
-              style={{ height: "100px", objectFit: "contain" }}
-            >
+            <div className="new-arrivals-img-contnent">
               <img
+                style={{ height: "230px" }}
                 className="img-fluid"
                 src={
                   product.variations.length > 0 &&
                   product.variations[0].images[0]
                 }
                 alt=""
-                style={{ height: "100px", objectFit: "contain" }}
               />
             </div>
 

@@ -536,7 +536,7 @@ const AddNewShopScreen = ({ match, history }) => {
                           />
                           <label
                             class="form-check-label"
-                            for="flexSwitchCheckDefault"
+                            htmlFor="flexSwitchCheckDefault"
                           >
                             Active
                           </label>
@@ -560,7 +560,7 @@ const AddNewShopScreen = ({ match, history }) => {
                             />
                             <label
                               class="form-check-label"
-                              for="flexSwitchCheckDefault"
+                              htmlFor="flexSwitchCheckDefault"
                             >
                               Open
                             </label>

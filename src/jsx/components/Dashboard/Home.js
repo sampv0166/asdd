@@ -7,6 +7,9 @@ import { listOrders } from "../../../actions/orderActions";
 import avatar from "../../../images/avatar/5.png";
 import Loader from "../Loader";
 import Message from "../Message";
+
+
+
 const Home = ({ history }) => {
   const analytics = useSelector((state) => state.analytics);
   const { loading, error, analysis } = analytics;
@@ -16,8 +19,17 @@ const Home = ({ history }) => {
 
   const dispatch = useDispatch();
 
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
   useLayoutEffect(() => {
-    dispatch(getAnalytics());
+    if (userInfo.user.typeofuser === "S") {
+      dispatch(getAnalytics());
+    }
+
+    if (userInfo.user.typeofuser === "U" || userInfo.user.typeofuser === "A") {
+      dispatch(getAnalytics(userInfo.user.shop_id));
+    }
+
     dispatch(listOrders(1));
   }, [dispatch]);
 
@@ -29,8 +41,6 @@ const Home = ({ history }) => {
         <Message variant="danger">{error || ordererror}</Message>
       ) : analysis.confirmedorders ? (
         <div>
-          {console.log(analysis)}
-          {console.log(orders)}
           <div className="row">
             <div className="col-xl-3 col-lg-6 col-sm-6">
               <div className="widget-stat card bg-danger">
@@ -132,7 +142,6 @@ const Home = ({ history }) => {
                         </div>
                       </div>
                     </div>
-                
                   </Row>
                   <Row>
                     <div className="col">
@@ -191,7 +200,7 @@ const Home = ({ history }) => {
                   <div className="widget-media">
                     <ul className="timeline">
                       {analysis.last10users.map((item, i) => (
-                        <li>
+                        <li key={i}>
                           {i < 5 ? (
                             <div className="timeline-panel">
                               <div className="media mr-2">

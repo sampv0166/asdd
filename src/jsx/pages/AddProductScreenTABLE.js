@@ -233,14 +233,14 @@ const AddProductScreen = () => {
   };
 
   const myValue = useMemo(() => {
-    console.log(productVariationList);
-    //console.log(myValue)
+   
+ 
   }, [productVariationList]);
 
   const handleSizeChange = (newValue, actionMeta) => {
     setSizeOptions(newValue);
     if (newValue) {
-      console.log(newValue);
+     
 
       let k = 0;
 
@@ -290,7 +290,7 @@ const AddProductScreen = () => {
     setColorOptions(newValue);
     if (newValue) {
       console.group('Value Changed');
-      console.log(newValue);
+    
       console.groupEnd();
       let k = 0;
 
@@ -323,7 +323,7 @@ const AddProductScreen = () => {
       ) {
         setProductVariationList([]);
       } else {
-        console.log('kkkkk');
+     
         variationList = new Array(sizeOptions.length);
         for (let i = 0; i < sizeOptions.length; i++) {
           variationList[i] = { size: `${sizeOptions[i].label}` };

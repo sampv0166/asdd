@@ -80,11 +80,11 @@ const AddNewCouponscreen = ({ history, match }) => {
   };
 
   const onSelect = (data) => {
-    console.log(data);
+    
   };
 
   const onRemove = (data) => {
-    console.log(data);
+   
   };
 
   const dispatch = useDispatch();

@@ -21,7 +21,6 @@ import { createPermission } from "./permissionActions";
 
 export const listShops = (pageNumber, history, keyword) => async (dispatch) => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
   const config = {
     headers: {
       Authorization: `Bearer ${userInfo.success.token}`,

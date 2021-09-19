@@ -42,7 +42,6 @@ export const createVariation =
         },
       };
 
-
       ProductVariationList.map((variations, index) => {
         const arr = variations.images.map((file) => file);
 
@@ -118,12 +117,19 @@ export const createSingleVariation =
         config
       );
 
+      const singlevariant = async () => {
+        await dispatch(listProductDetails(productId));
+      };
+
+      singlevariant();
+
       dispatch({
         type: SINGLE_VARIATION_CREATE_SUCCESS,
         payload: data,
       });
 
-      dispatch(listProductDetails(productId));
+    
+      
     } catch (error) {
       const message =
         error.response && error.response.data.message
@@ -153,8 +159,6 @@ export const updateVariation =
         },
       };
 
-
-
       const { data } = axios.post(
         `${BASE_URL}api/v2/admin/variation`,
         formdata,
@@ -163,10 +167,11 @@ export const updateVariation =
 
       if (deleteimageurl.length > 0) {
         deleteimageurl.map((url) => {
-
           dispatch(deleteVariationImage(url, varId, productId));
         });
       }
+
+      dispatch(listProductDetails(productId));
 
       dispatch({
         type: VARIATION_UPDATE_SUCCESS,

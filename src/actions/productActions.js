@@ -42,7 +42,7 @@ export const getallProducts = () => async (dispatch) => {
       config
     );
 
-    console.log(data)
+
 
     dispatch({
       type: ALL_PRODUCT_LIST_SUCCESS,
