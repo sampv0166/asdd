@@ -163,7 +163,6 @@ const AddNewCouponscreen = ({ history, match }) => {
 
     couponsList.coupons.map((item) => {
       if (couponId == item.id) {
-   
         setCoupon(item);
         if (item.product_ids !== null) {
           PopulateProductIds(item.product_ids);
@@ -174,7 +173,6 @@ const AddNewCouponscreen = ({ history, match }) => {
             });
           }
         } else {
-         
           if (item.shop_id !== null) {
             setSelectedShopOption({
               value: item.shop_id,
@@ -238,7 +236,6 @@ const AddNewCouponscreen = ({ history, match }) => {
               );
             }
 
-          
             if (newArray !== null && newArray !== undefined) {
               let objects = new Array(newArray.length);
               for (var x = 0; x < newArray.length; x++) {
@@ -250,7 +247,7 @@ const AddNewCouponscreen = ({ history, match }) => {
                 }
               }
             }
-           
+
             if (
               CommaSeperated !== undefined &&
               CommaSeperated !== null &&
@@ -260,7 +257,6 @@ const AddNewCouponscreen = ({ history, match }) => {
             } else {
             }
 
-           
             formdata.append("expired_at", values.expiry);
             formdata.append("code", values.code);
             formdata.append("description_en", values.description_en);
@@ -291,14 +287,19 @@ const AddNewCouponscreen = ({ history, match }) => {
               <div>
                 <div className="row g-3">
                   <div className="col-4">
-                    <TextField label="Coupon Code" name="code" type="text"    pattern=".*\S+.*" />
+                    <TextField
+                      label="Coupon Code"
+                      name="code"
+                      type="text"
+                      pattern=".*\S+.*"
+                    />
                   </div>
                   <div className="col-4">
                     <TextField
                       label="Coupon Value"
                       name="value"
                       type="number"
-                      min = '0'
+                      min="0"
                     />
                   </div>
 
@@ -347,6 +348,8 @@ const AddNewCouponscreen = ({ history, match }) => {
                 <div className="row">
                   <div className="col-xl-4 my-4">
                     <p className="mb-1">Select Product</p>
+                    
+
                     <Select
                       styles={{
                         control: (styles) => ({
@@ -364,10 +367,11 @@ const AddNewCouponscreen = ({ history, match }) => {
                       onChange={(e) => {
                         setSelectedOption(e);
                         formik.setFieldValue("product_id", e);
-                       
                         setSelectedShopOption(null);
                       }}
                     />
+
+                    
                   </div>
                   {user.user.typeofuser === "S" ? (
                     <div className="col-xl-4 my-4">
@@ -391,7 +395,6 @@ const AddNewCouponscreen = ({ history, match }) => {
                           setSelectedShopOption(e);
                           setSelectedOption(null);
                           formik.setFieldValue("shop_id", e);
-                       
                         }}
                       />
                     </div>

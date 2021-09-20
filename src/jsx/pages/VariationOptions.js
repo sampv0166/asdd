@@ -52,10 +52,10 @@ const VariationOptions = ({
   const dispatch = useDispatch();
 
   const handleVariationImageChange = (e, formik) => {
-    if (e.target.files.length + selectedFiles.length > 3) {
-      window.alert('maximmum 3 images')
-      return;
-    }
+    //if (e.target.files.length + selectedFiles.length > 3) {
+    //  window.alert('maximmum 3 images')
+    //  return;
+   // }
 
     if (varId) {
       if (e.target.files) {

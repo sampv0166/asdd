@@ -111,7 +111,7 @@ const AddNewUserScreen = ({ match, history }) => {
         setProdUpdate({ checked: false });
       }
 
-      if (user.permissions && user.permissions.includes("product.update")) {
+      if (user.permissions && user.permissions.includes("product.delete")) {
         setProdDelete({ checked: true });
       } else {
         setProdDelete({ checked: false });
@@ -133,12 +133,6 @@ const AddNewUserScreen = ({ match, history }) => {
         setshopDelete({ checked: true });
       } else {
         setshopDelete({ checked: false });
-      }
-
-      if (user.permissions && user.permissions.includes("product.update")) {
-        setProdDelete({ checked: true });
-      } else {
-        setProdDelete({ checked: false });
       }
 
       if (user.permissions && user.permissions.includes("category.add")) {
@@ -521,10 +515,20 @@ const AddNewUserScreen = ({ match, history }) => {
                   <div className="col-md-6">
                     <div className="row g-3">
                       <div className="col-md-6">
-                        <TextField label="Name" name="name" type="text"    pattern=".*\S+.*"/>
+                        <TextField
+                          label="Name"
+                          name="name"
+                          type="text"
+                          pattern=".*\S+.*"
+                        />
                       </div>
                       <div className="col-md-6">
-                        <TextField label="email" name="email" type="text"    pattern=".*\S+.*" />
+                        <TextField
+                          label="email"
+                          name="email"
+                          type="text"
+                          pattern=".*\S+.*"
+                        />
                       </div>
                     </div>
                     <div className="row g-3">
@@ -565,8 +569,7 @@ const AddNewUserScreen = ({ match, history }) => {
                 </div>
 
                 {userInfo.user.typeofuser !== "U" ? (
-                  
-                  <Row className = 'container-fluid'>
+                  <Row className="container-fluid">
                     <Col className="col-md-3 my-4">
                       Product Permissions
                       <div className="form-check form-switch my-2">
